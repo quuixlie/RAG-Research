@@ -3,9 +3,11 @@ Research project on Retrieval Augmented Generation. In addition to RAG, this rep
 
 # Running
 
-### Add the user to the docker group
-This is needed to run the docker commands without sudo. This is only needed once, and you need to log out and back in for the changes to take effect.
-Otherwise, you will need to run main.py with sudo.
+### Run vector database
 ```bash
-sudo usermod -aG docker $USER
+./milvus.sh start
+```
+### To stop vector database
+```bash
+./milvus.sh stop
 ```
