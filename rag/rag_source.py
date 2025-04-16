@@ -24,7 +24,7 @@ def prepare_vector_database(conversation_id: int, config: ConfigTemplate) -> Non
         VECTOR_DATABASE.create_collection(conversation_id, dimension=config.embedding_kwargs["dimension"])
 
 
-def remove_vector_database(conversation_id: int) -> None:
+def remove_conversation(conversation_id: int) -> None:
     """
     Remove the vector database collection for a conversation if it exists.
 
