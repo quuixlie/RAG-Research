@@ -85,7 +85,7 @@ class LLMFactory(_LLMTemplate):
             raise ValueError("LLM not set. Please set the LLM before generating text.")
 
         # Generate text using the LLM
-        return self.__llm.generate(prompt)
+        return self.__llm.generate_response(prompt)
 
 
 class _OpenAILLM(_LLMTemplate):

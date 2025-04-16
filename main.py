@@ -12,7 +12,7 @@ LLM_FACTORY = LLMFactory("OpenAI", **CONFIG.llm_kwargs)
 document = Document("/home/quuixlie/Desktop/100-English-Short-Stories.pdf", filetype="pdf")
 process_document(5, document, CONFIG)
 
-queries = [ "What is the main theme of the story?", "What are the key events in the story?", "Who are the main characters?", "What is the setting of the story?", "What is the moral of the story?"]
+queries = [ "food poisoned"]
 
 for query in queries:
     print(f"Query: {query}")
