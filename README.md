@@ -3,11 +3,11 @@ Research project on Retrieval Augmented Generation. In addition to RAG, this rep
 
 # Running
 
-### Run vector database
+### 1. Run vector database
 ```bash
 ./milvus.sh start
 ```
-### To stop vector database
+### 1.1. To stop vector database
 ```bash
 ./milvus.sh stop
 ```
