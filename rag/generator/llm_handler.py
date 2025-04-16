@@ -14,7 +14,7 @@ class _LLMTemplate(ABC):
 
 
     @abstractmethod
-    def generate(self, prompt: str) -> str:
+    def generate_response(self, prompt: str) -> str:
         """
         Generate a response based on the provided prompt.
 
@@ -72,7 +72,7 @@ class LLMFactory(_LLMTemplate):
                 raise ValueError(f"LLM {llm_name} not supported.")
 
 
-    def generate(self, prompt: str) -> str:
+    def generate_response(self, prompt: str) -> str:
         """
         Generate a response based on the provided prompt.
 
@@ -99,7 +99,7 @@ class _OpenAILLM(_LLMTemplate):
         self.client = OpenAI(api_key=self.api_key)
 
 
-    def generate(self, prompt: str) -> str:
+    def generate_response(self, prompt: str) -> str:
         """
         Generate a response based on the provided prompt using OpenAI API.
 

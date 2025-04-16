@@ -18,7 +18,7 @@ for query in queries:
     print(f"Query: {query}")
     relevant_documents = process_query(5, query, CONFIG)
     prompt = create_prompt(query, relevant_documents)
-    answer = LLM_FACTORY.generate(prompt)
+    answer = LLM_FACTORY.generate_response(prompt)
     print(f"Answer: {answer}")
     print("\n\n\n")
 
