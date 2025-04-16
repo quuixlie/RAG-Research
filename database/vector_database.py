@@ -1,7 +1,7 @@
 from pymilvus import MilvusClient, DataType, CollectionSchema
 
 
-class VectorDB:
+class VectorDatabase:
     def __init__(self):
         self.client = MilvusClient(
             uri="http://localhost:19530",
