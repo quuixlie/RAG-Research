@@ -1,5 +1,5 @@
 from pymilvus import MilvusClient, DataType, CollectionSchema
-from vector_database_utils import is_vector_database_running, start_vector_database, stop_vector_database
+from .vector_database_utils import is_vector_database_running, start_vector_database, stop_vector_database
 
 
 class VectorDatabase:

@@ -14,7 +14,7 @@ import docker
 import subprocess
 
 
-def is_vector_database_running(image_name: str) -> bool:
+def is_vector_database_running(image_name = "milvusdb/milvus") -> bool:
     """
     This function checks if the vector database container is running, based on the image name.
     It assumes that vector database is running in a Docker container.
@@ -45,7 +45,7 @@ def start_vector_database() -> None:
     :return: None
     """
 
-    subprocess.run(["bash", "milvus.sh", "start"], capture_output=True, check=True)
+    subprocess.run(["bash", "database/milvus.sh", "start"], capture_output=True, check=True)
 
 
 def stop_vector_database() -> None:
@@ -55,4 +55,4 @@ def stop_vector_database() -> None:
     :return: None
     """
 
-    subprocess.run(["bash", "milvus.sh", "stop"], capture_output=True, check=True)
+    subprocess.run(["bash", "database/milvus.sh", "stop"], capture_output=True, check=True)
