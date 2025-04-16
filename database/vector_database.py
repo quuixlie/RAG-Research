@@ -1,41 +1,12 @@
 from pymilvus import MilvusClient, DataType, CollectionSchema
-from .vector_database_utils import is_vector_database_running, start_vector_database, stop_vector_database
 
 
 class VectorDatabase:
     def __init__(self):
-        self.__start_vector_database()
-
         self.client = MilvusClient(
             uri="http://localhost:19530",
             token="root:Milvus"
         )
-
-
-    def __start_vector_database(self) -> None:
-        """
-        This function checks if the vector database is running. If not, it starts the vector database.
-        It is assumed that the vector database is running in a Docker container.
-
-        :return:
-        """
-
-        if not is_vector_database_running():
-            start_vector_database()
-            print("Vector database started.")
-        else:
-            print("Vector database already running.")
-
-
-    def stop(self) -> None:
-        """
-        This function stops the vector database.
-
-        :return: None
-        """
-
-        stop_vector_database()
-        print("Vector database stopped.")
 
 
     def create_collection(self, conversation_d: int, dimension: int) -> None:
