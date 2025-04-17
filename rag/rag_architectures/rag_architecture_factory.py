@@ -55,28 +55,25 @@ class RAGArchitectureFactory(RAGArchitectureTemplate):
         # ======================================================================================
 
 
-    def process_document(self, conversation_id: int, document, config) -> None:
+    def process_document(self, conversation_id: int, document) -> None:
         """
         Process the document to extract relevant information and store it in the vector database.
         Conversation ID is used to identify the conversation and store the document in the correct vector database collection.
 
         :param conversation_id: ID of the conversation
         :param document: Document to be processed
-        :param config: Configuration object containing RAG settings
         :return: None
         """
-        return self.__rag_architecture.process_document(conversation_id, document, config)
+        return self.__rag_architecture.process_document(conversation_id, document)
 
 
-    def process_query(self, conversation_id: int, query: str, config) -> str:
+    def process_query(self, conversation_id: int, query: str) -> str:
         """
         Process the query to extract relevant information. Returns the answer to the query based on the processed document.
         Conversation ID is used to identify the conversation and retrieve the relevant informations from the vector database collection.
 
         :param conversation_id: ID of the conversation
         :param query: Query to be processed
-        :param config: Configuration object containing RAG settings
         :return: Answer to the query
         """
-        return self.__rag_architecture.process_query(conversation_id, query, config)
-    
+        return self.__rag_architecture.process_query(conversation_id, query)
