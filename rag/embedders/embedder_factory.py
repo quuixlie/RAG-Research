@@ -54,7 +54,7 @@ class EmbedderFactory(EmbedderTemplate):
                 self.__embedder = BasicEmbedder(embedder_name)
             case _:
                 raise ValueError(f"Unsupported embedder name: {embedder_name}. Please use a valid embedder name.")
-        # ============================= Switch between models =============================
+        # =================================================================================
 
 
     def encode(self, fragments: list, show_progress_bar: bool = False) -> ndarray:
