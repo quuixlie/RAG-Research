@@ -6,8 +6,8 @@ from rag.retriever.embedder import EmbedderFactory
 
 # Keep vector database instance in memory to avoid reloading it every time (For performance)
 VECTOR_DATABASE = VectorDatabase()
-TOKENIZER_FACTORY = TokenizerFactory("fixed-size", chunk_size=256)
-EMBEDDER_FACTORY = EmbedderFactory("sentence-transformers/all-MiniLM-L12-v2")
+TOKENIZER = TokenizerFactory("fixed-size", chunk_size=256)
+EMBEDDER = EmbedderFactory("sentence-transformers/all-MiniLM-L12-v2")
 
 
 def prepare_vector_database(conversation_id: int, config: ConfigTemplate) -> None:
@@ -46,12 +46,12 @@ def prepare_document_embeddings_with_corresponding_text(document: str, config: C
     """
 
     # Split the document into fragments
-    TOKENIZER_FACTORY.set_tokenizer(config.tokenizer_name, **config.tokenizer_kwargs)
-    fragments = TOKENIZER_FACTORY.tokenize(document)
+    TOKENIZER.set_tokenizer(config.tokenizer_name, **config.tokenizer_kwargs)
+    fragments = TOKENIZER.tokenize(document)
 
     # Vectorize the fragments
-    EMBEDDER_FACTORY.set_embedder(config.embedding_model, **config.embedding_kwargs)
-    embeddings = EMBEDDER_FACTORY.encode(fragments, show_progress_bar=True)
+    EMBEDDER.set_embedder(config.embedding_model, **config.embedding_kwargs)
+    embeddings = EMBEDDER.encode(fragments, show_progress_bar=True)
 
     # Create a list of dictionaries with text and embedding
     embeddings_with_text_pairs = [
@@ -87,8 +87,8 @@ def get_relevant_documents_by_query(conversation_id: int, query: str, config: Co
     """
 
     # Embedding
-    EMBEDDER_FACTORY.set_embedder(config.embedding_model, **config.embedding_kwargs)
-    query_embedding = EMBEDDER_FACTORY.encode([query], show_progress_bar=True)
+    EMBEDDER.set_embedder(config.embedding_model, **config.embedding_kwargs)
+    query_embedding = EMBEDDER.encode([query], show_progress_bar=True)
 
     # Search the vector database
     results = VECTOR_DATABASE.search(conversation_id, query_embedding.tolist())
