@@ -113,6 +113,7 @@ class VectorDatabase:
 
         collection_name = self.__get_collection_name_by_id(conversation_id)
         self.client.insert(collection_name, data=data)
+        self.client.flush(collection_name)
 
 
     def search(self, conversation_id: int, query_embedding: list):
