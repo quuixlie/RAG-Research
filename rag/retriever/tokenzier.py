@@ -60,6 +60,9 @@ class TokenizerFactory(_TokenizerTemplate):
         :return: None
         """
 
+        # Set the tokenizer name
+        self.tokenizer_name = tokenizer_name
+
         match tokenizer_name:
             case "fixed-size":
                 self.__tokenizer = _FixedSizeTokenizer(**kwargs)
