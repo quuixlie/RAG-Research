@@ -3,6 +3,7 @@ from rag.rag_architectures.classic_rag import ClassicRAG
 # =============================================================================
 
 from rag.rag_architectures.__rag_architecture_template import RAGArchitectureTemplate
+from pymupdf import Document
 
 
 class RAGArchitectureFactory(RAGArchitectureTemplate):
@@ -64,7 +65,7 @@ class RAGArchitectureFactory(RAGArchitectureTemplate):
         # ======================================================================================
 
 
-    def process_document(self, conversation_id: int, document) -> None:
+    def process_document(self, conversation_id: int, document: Document) -> None:
         """
         Process the document to extract relevant information and store it in the vector database.
         Conversation ID is used to identify the conversation and store the document in the correct vector database collection.

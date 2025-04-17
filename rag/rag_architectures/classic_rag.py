@@ -6,6 +6,7 @@ from rag.utils.prompt_builder import create_prompt
 from rag.llms.llm_factory import LLMFactory
 from rag.embedders.embedder_factory import EmbedderFactory
 from rag.tokenizers.tokenizer_factory import TokenizerFactory
+from pymupdf import Document
 
 
 class ClassicRAG(RAGArchitectureTemplate):
@@ -27,7 +28,7 @@ class ClassicRAG(RAGArchitectureTemplate):
         self.vector_database = VectorDatabase()
 
 
-    def process_document(self, conversation_id: int, document) -> None:
+    def process_document(self, conversation_id: int, document: Document) -> None:
         """
         Process the document to extract relevant information and store it in the vector database.
         Conversation ID is used to identify the conversation and store the document in the correct vector database collection.
