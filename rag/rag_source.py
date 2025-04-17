@@ -1,7 +1,7 @@
 from database.vector_database import VectorDatabase
 from config import ConfigTemplate
-from rag.retriever.tokenzier import TokenizerFactory
-from rag.retriever.embedder import EmbedderFactory
+from rag.tokenizers.tokenzier import TokenizerFactory
+from rag.embedders.embedder import EmbedderFactory
 
 
 # Keep vector database instance in memory to avoid reloading it every time (For performance)

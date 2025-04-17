@@ -2,8 +2,8 @@ from config import Config
 from rag.rag_entrypoint import process_document, process_query
 from rag.rag_source import remove_conversation
 from pymupdf import Document
-from rag.generator.prompt_builder import create_prompt
-from rag.generator.llm_handler import LLMFactory
+from rag.utils.prompt_builder import create_prompt
+from rag.llms.llm_handler import LLMFactory
 
 
 CONFIG = Config()

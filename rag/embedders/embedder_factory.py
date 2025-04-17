@@ -1,41 +1,24 @@
-from abc import ABC, abstractmethod
+# ============================ Models import ===========================
+from rag.embedders.basic_embedder import BasicEmbedder
+# ======================================================================
+
+
+from rag.embedders.__embedder_template import EmbedderTemplate
 from numpy import ndarray
-from sentence_transformers import SentenceTransformer
 
 
-class _EmbedderTemplate(ABC):
-    """
-    Base class for embedding models. This class defines the interface for embedding models, which are used to convert
-    text into embeddings.
-    """
-
-    def __init__(self):
-        self.embedder_name = None
-
-
-    @abstractmethod
-    def encode(self, fragments: list, show_progress_bar: bool = False) -> list:
-        """
-        Encode a list of text fragments into embeddings.
-        :param fragments: List of text fragments to encode
-        :param show_progress_bar: Whether to show a progress bar
-        :return: List of embeddings
-        """
-
-        pass
-
-
-class EmbedderFactory(_EmbedderTemplate):
+class EmbedderFactory(EmbedderTemplate):
     """
     Factory class for creating embedding models. This class allows you to set the embedding model by calling the
     set_embedder method with the desired embedder name. Then, you can use the encode method to convert list of texts into
-    embeddings.
+    embeddings. You have to pass an existing embedding model and its parameters to the constructor.
 
     :param embedder_name: Name of the embedding model to be set
+    :param kwargs: Additional parameters for the embedding model
     """
 
     def __init__(self, embedder_name: str, **kwargs):
-        super().__init__()
+        super().__init__(embedder_name)
         self.__embedder = None
         self.set_embedder(embedder_name, **kwargs)
 
@@ -65,11 +48,13 @@ class EmbedderFactory(_EmbedderTemplate):
         # Set the embedder name
         self.embedder_name = embedder_name
 
+        # ============================= Switch between models =============================
         match embedder_name:
-            case "sentence-transformers/all-MiniLM-L12-v2":
-                self.__embedder = SentenceTransformer(embedder_name, **kwargs)
+            case "basic-embedder":
+                self.__embedder = BasicEmbedder(embedder_name)
             case _:
                 raise ValueError(f"Unsupported embedder name: {embedder_name}. Please use a valid embedder name.")
+        # ============================= Switch between models =============================
 
 
     def encode(self, fragments: list, show_progress_bar: bool = False) -> ndarray:
