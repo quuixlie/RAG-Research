@@ -7,9 +7,10 @@ class ConfigTemplate:
     Configuration base class for RAG (Retrieval-Augmented Generation).
     """
 
-    def __init__(self, database_kwargs: dict, embedder_name: str, embedder_kwargs: dict, tokenizer_name: str, tokenizer_kwargs: dict,
+    def __init__(self, database_kwargs: dict, rag_architecture_name: str, embedder_name: str, embedder_kwargs: dict, tokenizer_name: str, tokenizer_kwargs: dict,
                  llm_name: str, llm_kwargs: dict) -> None:
         self.database_kwargs = database_kwargs
+        self.rag_architecture_name = rag_architecture_name
         self.embedder_name = embedder_name
         self.embedder_kwargs = embedder_kwargs
         self.tokenizer_name = tokenizer_name
@@ -18,9 +19,11 @@ class ConfigTemplate:
         self.llm_kwargs = llm_kwargs
 
 
+
     def __repr__(self) -> str:
         return (f"Config (\n"
                 f"  database_kwargs: {self.database_kwargs},\n"
+                f"  rag_architecture_name: {self.rag_architecture_name},\n"
                 f"  embedder_name: {self.embedder_name},\n"
                 f"  embedder_kwargs: {self.embedder_kwargs},\n"
                 f"  tokenizer_name: {self.tokenizer_name},\n"
@@ -37,6 +40,7 @@ class Config(ConfigTemplate):
             database_kwargs = {
                 "embedding_dimension": 384,
             },
+            rag_architecture_name = "classic-rag",
             embedder_name = "basic-embedder",
             embedder_kwargs= {
                 "sentence_transformer_name": "all-MiniLM-L12-v2",
