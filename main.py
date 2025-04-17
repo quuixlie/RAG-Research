@@ -7,18 +7,20 @@ from rag.generator.llm_handler import LLMFactory
 
 
 CONFIG = Config()
-LLM_FACTORY = LLMFactory("OpenAI", **CONFIG.llm_kwargs)
+LLM = LLMFactory("OpenAI", **CONFIG.llm_kwargs)
 
 document = Document("/home/quuixlie/Desktop/100-English-Short-Stories.pdf", filetype="pdf")
 process_document(5, document, CONFIG)
 
-queries = [ "food poisoned"]
+queries = ["food poisoned", "food poisoned"]
 
 for query in queries:
     print(f"Query: {query}")
     relevant_documents = process_query(5, query, CONFIG)
     prompt = create_prompt(query, relevant_documents)
-    answer = LLM_FACTORY.generate_response(prompt)
+    answer = LLM.generate_response(prompt)
+    print(f"Prompt: {prompt}")
+    print("\n\n\n\n")
     print(f"Answer: {answer}")
     print("\n\n\n")
 
