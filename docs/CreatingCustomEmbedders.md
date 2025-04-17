@@ -8,7 +8,7 @@ This document provides a guide on how to create a new embedder for the RAG (Retr
 ### 2. Create a new file in the 'rag/embedders' directory with the name `embedder_name.py`.
 ### 3. Implement the embedder class in the new file (it should implement the `encode` method). For example:
 ```python
-from rag.embedders.embedder_template import EmbedderTemplate
+from rag.embedders.__embedder_template import EmbedderTemplate
 from numpy import ndarray
 
 

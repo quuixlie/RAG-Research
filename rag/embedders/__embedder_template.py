@@ -7,7 +7,7 @@ class EmbedderTemplate(ABC):
     Base class for embedding models. This class defines the interface for embedding models, which are used to convert
     text into embeddings. A new embedding model can be created by inheriting from this class and implementing the encode method.
 
-    :param embedder_name: Name of the embedding model to be set
+    :param embedder_name: Name of the embedding model
     """
 
     def __init__(self, embedder_name: str) -> None:
