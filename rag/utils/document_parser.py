@@ -1,6 +1,7 @@
 import pymupdf4llm
 from pymupdf import Document
 from multiprocessing import Pool, cpu_count
+import logging
 
 
 def parse_to_markdown(document: Document) -> str:
@@ -9,6 +10,9 @@ def parse_to_markdown(document: Document) -> str:
     :param document: Document object
     :return: Parsed markdown content
     """
+
+    logging.info(f"Parsing document to markdown: {document.name}")
+
     num_proc = cpu_count()
     total_pages = document.page_count
 
@@ -28,6 +32,8 @@ def parse_to_markdown(document: Document) -> str:
     with Pool(processes=num_proc) as pool:
         results = pool.starmap(__parse_to_markdown, [(document_bytes, pages) for pages in pages_list])
         parsed_document_to_markdown = "".join(results)
+
+    logging.info(f"Parsed document to markdown: {document.name}")
 
     return parsed_document_to_markdown
 

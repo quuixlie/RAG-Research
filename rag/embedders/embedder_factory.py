@@ -5,6 +5,7 @@ from rag.embedders.basic_embedder import BasicEmbedder
 
 from rag.embedders.__embedder_template import EmbedderTemplate
 from numpy import ndarray
+import logging
 
 
 class EmbedderFactory(EmbedderTemplate):
@@ -66,7 +67,13 @@ class EmbedderFactory(EmbedderTemplate):
         :return: 2D numpy array of embeddings or 1D numpy array of embedding (if only one fragment is passed)
         """
 
+        logging.info(f"Embedder: {self.embedder_name} - Encoding {len(fragments)} fragments.")
+
         if self.__embedder is None:
             raise ValueError("Embedder not set. Please set an embedder before encoding.")
 
-        return self.__embedder.encode(fragments, show_progress_bar=show_progress_bar)
+        embeddings = self.__embedder.encode(fragments, show_progress_bar=show_progress_bar)
+
+        logging.info(f"Embedder: {self.embedder_name} - Finished encoding {len(fragments)} fragments.")
+
+        return embeddings

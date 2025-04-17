@@ -3,6 +3,7 @@ from rag.llms.chatgpt import ChatGPT
 # ======================================================================
 
 from rag.llms.__llm_template import LLMTemplate
+import logging
 
 
 class LLMFactory(LLMTemplate):
@@ -63,4 +64,11 @@ class LLMFactory(LLMTemplate):
         :return: Generated response
         """
 
-        return self.__llm.generate_response(prompt)
+        logging.info(f"Generating response for: \n{prompt}")
+
+        # Generate response using the LLM
+        response = self.__llm.generate_response(prompt)
+
+        logging.info(f"Generated response: \n{response}")
+
+        return response

@@ -3,6 +3,7 @@ from rag.tokenizers.fixed_size_tokenizer import FixedSizeTokenizer
 # ======================================================================
 
 from rag.tokenizers.__tokenizer_template import TokenizerTemplate
+import logging
 
 
 class TokenizerFactory(TokenizerTemplate):
@@ -63,7 +64,13 @@ class TokenizerFactory(TokenizerTemplate):
         :return: List of tokens
         """
 
+        logging.info(f"Tokenizing text: {len(text)} characters.")
+
         if self.__tokenizer is None:
             raise ValueError("Tokenizer not set. Please set a tokenizer before tokenizing.")
 
-        return self.__tokenizer.tokenize(text)
+        list_of_tokens = self.__tokenizer.tokenize(text)
+
+        logging.info(f"Tokenized text: {len(list_of_tokens)} tokens.")
+
+        return list_of_tokens

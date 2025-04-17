@@ -1,4 +1,5 @@
 import os
+import logging
 
 
 class ConfigTemplate:
@@ -50,4 +51,10 @@ class Config(ConfigTemplate):
                 "api_key": os.getenv("OPENAI_API_KEY"),
                 "initial_prompt": "You are a helpful assistant. Answer the question based on the provided context.",
             }
+        )
+
+        # Set logging settings
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
         )
