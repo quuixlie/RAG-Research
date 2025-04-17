@@ -6,6 +6,8 @@ from numpy import ndarray
 class BasicEmbedder(EmbedderTemplate):
     """
     Basic embedder which uses SentenceTransformer to encode text fragments into embeddings.
+
+    :param embedder_name: Name of the embedder
     """
 
     def __init__(self, embedder_name: str) -> None:

@@ -1,7 +1,6 @@
-from config import ConfigTemplate
 from rag.rag_source import *
 from pymupdf import Document
-from utils.document_parser import parse_to_markdown
+from rag.utils.document_parser import parse_to_markdown
 
 
 def process_document(conversation_id: int, document: Document, config: ConfigTemplate) -> None:
