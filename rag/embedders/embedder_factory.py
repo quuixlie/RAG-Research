@@ -33,7 +33,7 @@ class EmbedderFactory(EmbedderTemplate):
         """
 
         # If the new embedder name is different from the current one, change the embedder (model)
-        if self.embedder_name != embedder_name:
+        if self.embedder_name != embedder_name or self.__embedder is None:
             self.__change_embedder(embedder_name, **kwargs)
 
 
@@ -51,7 +51,7 @@ class EmbedderFactory(EmbedderTemplate):
         # ============================= Switch between models =============================
         match embedder_name:
             case "basic-embedder":
-                self.__embedder = BasicEmbedder(embedder_name)
+                self.__embedder = BasicEmbedder(embedder_name, **kwargs)
             case _:
                 raise ValueError(f"Unsupported embedder name: {embedder_name}. Please use a valid embedder name.")
         # =================================================================================

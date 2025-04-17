@@ -21,6 +21,15 @@ class RAGArchitectureFactory(RAGArchitectureTemplate):
         self.set_rag_architecture(rag_architecture_name, **kwargs)
 
 
+    def get_rag_architecture(self):
+        """
+        Get the current RAG architecture (to for example, call some specific method of the architecture).
+
+        :return: Current RAG architecture
+        """
+        return self.__rag_architecture
+
+
     def set_rag_architecture(self, rag_architecture_name: str, **kwargs) -> None:
         """
         Set the RAG architecture name and change the RAG architecture.
@@ -31,7 +40,7 @@ class RAGArchitectureFactory(RAGArchitectureTemplate):
         """
 
         # If the new RAG architecture name is different from the current one, change the RAG architecture (model)
-        if self.rag_architecture_name != rag_architecture_name:
+        if self.rag_architecture_name != rag_architecture_name or self.__rag_architecture is None:
             self.__change_rag_architecture(rag_architecture_name, **kwargs)
 
 

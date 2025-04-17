@@ -31,7 +31,7 @@ class LLMFactory(LLMTemplate):
         """
 
         # If the new LLM name is different from the current one, change the LLM (model)
-        if self.llm_name != llm_name:
+        if self.llm_name != llm_name or self.__llm is None:
             self.__change_llm(llm_name, **kwargs)
 
 
@@ -48,7 +48,7 @@ class LLMFactory(LLMTemplate):
 
         # ============================= Switch between models =============================
         match llm_name:
-            case "ChatGPT":
+            case "chatgpt":
                 self.__llm = ChatGPT(llm_name, **kwargs)
             case _:
                 raise ValueError(f"Unsupported LLM name: {llm_name}. Please use a valid LLM name.")

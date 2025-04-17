@@ -1,27 +1,14 @@
 from config import Config
-from rag.rag_entrypoint import process_document, process_query
-from rag.rag_source import remove_conversation
+from rag.rag_architectures.rag_architecture_factory import RAGArchitectureFactory
 from pymupdf import Document
-from rag.utils.prompt_builder import create_prompt
-from rag.llms.llm_handler import LLMFactory
+
+document = Document("/home/quuixlie/Desktop/Pan Tadeusz.pdf", filetype="pdf")
 
 
-CONFIG = Config()
-LLM = LLMFactory("OpenAI", **CONFIG.llm_kwargs)
+config = Config()
+classic_rag = RAGArchitectureFactory("classic-rag", config=config)
 
-document = Document("/home/quuixlie/Desktop/100-English-Short-Stories.pdf", filetype="pdf")
-process_document(5, document, CONFIG)
 
-queries = ["food poisoned", "food poisoned"]
-
-for query in queries:
-    print(f"Query: {query}")
-    relevant_documents = process_query(5, query, CONFIG)
-    prompt = create_prompt(query, relevant_documents)
-    answer = LLM.generate_response(prompt)
-    print(f"Prompt: {prompt}")
-    print("\n\n\n\n")
-    print(f"Answer: {answer}")
-    print("\n\n\n")
-
-remove_conversation(5)
+classic_rag.process_document(4, document)
+print(classic_rag.process_query(4, "What is the name of the main character?"))
+classic_rag.get_rag_architecture().remove_conversation(4)

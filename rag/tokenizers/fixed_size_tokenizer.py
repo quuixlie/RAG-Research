@@ -9,12 +9,12 @@ class FixedSizeTokenizer(TokenizerTemplate):
     The tokenize method takes a string as input and returns a list of tokens.
 
     :param tokenizer_name: Name of the tokenizer
-    :param max_length: Maximum length of the tokens
+    :param chunk_size: Maximum length of the tokens
     """
 
-    def __init__(self, tokenizer_name: str, max_length: int) -> None:
+    def __init__(self, tokenizer_name: str, chunk_size: int) -> None:
         super().__init__(tokenizer_name)
-        self.max_length = max_length
+        self.chunk_size = chunk_size
 
 
     def tokenize(self, text: str) -> list:
@@ -26,4 +26,4 @@ class FixedSizeTokenizer(TokenizerTemplate):
         """
 
         # Create fixed-size tokens
-        return [text[i:i + self.max_length] for i in range(0, len(text), self.max_length)]
+        return [text[i:i + self.chunk_size] for i in range(0, len(text), self.chunk_size)]

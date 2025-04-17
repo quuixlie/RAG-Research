@@ -31,7 +31,7 @@ class TokenizerFactory(TokenizerTemplate):
         """
 
         # If the new tokenizer name is different from the current one, change the tokenizer (model)
-        if self.tokenizer_name != tokenizer_name:
+        if self.tokenizer_name != tokenizer_name or self.__tokenizer is None:
             self.__change_tokenizer(tokenizer_name, **kwargs)
 
 

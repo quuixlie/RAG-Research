@@ -79,7 +79,7 @@ class ClassicRAG(RAGArchitectureTemplate):
 
         # Create a collection for the conversation if it doesn't exist
         if not self.vector_database.has_collection(conversation_id):
-            dim = self.config.embedder_kwargs["dimension"]
+            dim = self.config.database_kwargs["embedding_dimension"]
             self.vector_database.create_collection(conversation_id, dimension=dim)
 
 

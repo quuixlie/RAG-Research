@@ -10,9 +10,9 @@ class BasicEmbedder(EmbedderTemplate):
     :param embedder_name: Name of the embedder
     """
 
-    def __init__(self, embedder_name: str) -> None:
+    def __init__(self, embedder_name: str, sentence_transformer_name: str, device: str) -> None:
         super().__init__(embedder_name)
-        self.__embedder = SentenceTransformer(embedder_name)
+        self.__embedder = SentenceTransformer(sentence_transformer_name, device=device)
 
 
     def encode(self, fragments: list, show_progress_bar: bool = False) -> ndarray:
