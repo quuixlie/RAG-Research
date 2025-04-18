@@ -172,3 +172,13 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# RAG Metrics Dataset
+metrics/rag_dataset/dramas
+metrics/rag_dataset/epics
+metrics/rag_dataset/lyrics
+metrics/rag_dataset/manuals
+metrics/rag_dataset/papers
+metrics/rag_dataset/regulations
+metrics/rag_dataset/reports
+metrics/rag_dataset.zip
