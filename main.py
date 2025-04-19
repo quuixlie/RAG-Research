@@ -1,9 +1,19 @@
-from pipelines.rag_test_pipeline import rag_test_pipeline
+from pipelines.rag_validation_pipeline import rag_validation_pipeline
+from config import Config
+import pandas as pd
+
+
+def main():
+    config = Config()
+
+    # Load the dataset
+    dataset = pd.read_csv("metrics/rag_dataset/dataset.csv")
+
+    # Define the required columns
+    required_columns = ["Question", "Answer", "FileNameRelativePath"]
+
+    rag_validation_pipeline([config], dataset, required_columns, "metrics/rag_dataset/")
+
 
 if __name__ == "__main__":
-    # Run the RAG test pipeline
-    rag_test_pipeline(
-        document_path="/home/quuixlie/Desktop/Pan Tadeusz.pdf",
-        query="Who is the father of Pan Tadeusz?",
-        conversation_id=2137
-    )
+    main()
