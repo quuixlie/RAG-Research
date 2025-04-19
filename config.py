@@ -50,10 +50,17 @@ class Config(ConfigTemplate):
             tokenizer_kwargs = {
                 "chunk_size": 256
             },
-            llm_name = "chatgpt",
+            # llm_name = "chat-gpt",
+            # llm_kwargs = {
+            #     "api_key": os.getenv("OPENAI_API_KEY"),
+            #     "initial_prompt": "You are a helpful assistant. Answer the question based on the provided context.",
+            #     "model": "gpt-3.5-turbo",
+            # }
+            llm_name = "open-router",
             llm_kwargs = {
-                "api_key": os.getenv("OPENAI_API_KEY"),
+                "api_key": os.getenv("OPENROUTER_API_KEY"),
                 "initial_prompt": "You are a helpful assistant. Answer the question based on the provided context.",
+                "model_name": "openai/gpt-3.5-turbo",
             }
         )
 
