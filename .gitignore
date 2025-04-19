@@ -182,3 +182,7 @@ metrics/rag_dataset/papers
 metrics/rag_dataset/regulations
 metrics/rag_dataset/reports
 metrics/rag_dataset.zip
+output/
+volumes/
+user.yaml
+embedEtcd.yaml
