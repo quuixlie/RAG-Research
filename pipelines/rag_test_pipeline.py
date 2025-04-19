@@ -1,12 +1,11 @@
-from config import Config
+from config import ConfigTemplate
 from rag.rag_architectures.rag_architecture_factory import RAGArchitectureFactory
 from pymupdf import Document
 
 
-def rag_test_pipeline(document_path: str, query: str, conversation_id: int) -> None:
+def rag_test_pipeline(document_path: str, query: str, conversation_id: int, config: ConfigTemplate) -> None:
     document = Document(document_path, filetype="pdf")
 
-    config = Config()
     classic_rag = RAGArchitectureFactory(config.rag_architecture_name, config=config)
 
     classic_rag.process_document(conversation_id, document)
