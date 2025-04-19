@@ -1,3 +1,5 @@
+import os
+
 from sentence_transformers import SentenceTransformer
 from rag.embedders.__embedder_template import EmbedderTemplate
 from numpy import ndarray
@@ -13,6 +15,7 @@ class BasicEmbedder(EmbedderTemplate):
     def __init__(self, embedder_name: str, sentence_transformer_name: str, device: str) -> None:
         super().__init__(embedder_name)
         self.__embedder = SentenceTransformer(sentence_transformer_name, device=device)
+        os.environ["TOKENIZERS_PARALLELISM"] = "true" # Disable warning about parallelism
 
 
     def encode(self, fragments: list, show_progress_bar: bool = False) -> ndarray:
