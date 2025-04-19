@@ -1,5 +1,6 @@
 # ============================ Models import ===========================
-from rag.llms.chatgpt import ChatGPT
+from rag.llms.chat_gpt import ChatGPT
+from rag.llms.open_router import OpenRouter
 # ======================================================================
 
 from rag.llms.__llm_template import LLMTemplate
@@ -49,8 +50,10 @@ class LLMFactory(LLMTemplate):
 
         # ============================= Switch between models =============================
         match llm_name:
-            case "chatgpt":
+            case "chat-gpt":
                 self.__llm = ChatGPT(llm_name, **kwargs)
+            case "open-router":
+                self.__llm = OpenRouter(llm_name, **kwargs)
             case _:
                 raise ValueError(f"Unsupported LLM name: {llm_name}. Please use a valid LLM name.")
         # ============================= Switch between models =============================

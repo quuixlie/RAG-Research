@@ -13,10 +13,11 @@ class ChatGPT(LLMTemplate):
     :param api_key: API key for the OpenAI API
     """
 
-    def __init__(self, llm_name: str, initial_prompt: str, api_key) -> None:
+    def __init__(self, llm_name: str, initial_prompt: str, api_key: str, model: str) -> None:
         super().__init__(llm_name)
         self.initial_prompt = initial_prompt
         self.client = OpenAI(api_key=api_key)
+        self.model = model
 
 
     def generate_response(self, prompt: str) -> str:
@@ -29,7 +30,7 @@ class ChatGPT(LLMTemplate):
 
         # Generate a response using the OpenAI API
         response = self.client.responses.create(
-            model = "gpt-3.5-turbo",
+            model = self.model,
             instructions = self.initial_prompt,
             input = prompt,
         )
