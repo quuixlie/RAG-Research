@@ -1,7 +1,8 @@
 import os
-
+import time
+from typing import TextIO
 from rag.rag_architectures.rag_architecture_factory import RAGArchitectureFactory
-from config import ConfigTemplate, Config
+from config import ConfigTemplate
 import pandas as pd
 from database.vector_database import VectorDatabase
 from pymupdf import Document
@@ -48,7 +49,7 @@ def prepare_dataset(dataset: pd.DataFrame, required_columns: list) -> pd.DataFra
 
 
 def __evaluate_rag_on_file(rag_architecture: RAGArchitectureFactory, file: Document, question_answer_pairs: list, vector_database: VectorDatabase,
-                           output_filename: str) -> None:
+                           output_file: TextIO, delimiter: str) -> None:
     """
     Evaluate the RAG architecture on a single file.
 
@@ -56,6 +57,8 @@ def __evaluate_rag_on_file(rag_architecture: RAGArchitectureFactory, file: Docum
     :param file: File to evaluate.
     :param question_answer_pairs: List of question-answer pairs for the file.
     :param vector_database: Vector database instance. Will be used to clear collections after processing each file.
+    :param output_file: Output file to write the evaluation results to.
+    :param delimiter: Delimiter to use for separating the columns in the output file.
     """
 
     logging.info(f"Processing file: {file.name}")
@@ -65,7 +68,10 @@ def __evaluate_rag_on_file(rag_architecture: RAGArchitectureFactory, file: Docum
         os.makedirs(os.path.dirname("output/"), exist_ok=True)
         logging.info(f"Output directory does not exist: output/, creating it...")
 
-    output_file = open(f"output/{output_filename}.txt", "a")
+    # Make sure that collection are not existing before processing the file
+    if vector_database.has_collection(2137):
+        vector_database.remove_collection(2137)
+
     try:  # Ensure that the vector database is cleared after processing each file
         rag_architecture.process_document(2137, file)
 
@@ -82,18 +88,35 @@ def __evaluate_rag_on_file(rag_architecture: RAGArchitectureFactory, file: Docum
             logging.info('=' * 50)
 
             # Write the evaluation results to the output file
-            output_file.write(f"Question: {question}, RAG answer: {rag_answer}, Correct answer: {correct_answer}\n")
+            output_file.write(f'Question: {question}{delimiter} RAG answer: {rag_answer}{delimiter} Correct answer: {correct_answer}\n')
     except Exception as e:
         logging.error(f"Error processing file {file.name}: {e}")
     finally:
         if vector_database.has_collection(2137):
             vector_database.remove_collection(2137)
-        output_file.close()
+
+
+def prepare_output_file(output_filename: str) -> tuple[TextIO, str]:
+    """
+    Prepare the output file for the evaluation results. The output file will be created if it doesn't exist in the output/ directory.
+    The output file will be named after the configuration class name and current date. Long separator will be used to avoid issues with CSV formatting.
+
+    :param output_filename: Name of the output file.
+    :return: Output file object (Opened in append mode).
+    """
+
+    # Prepare the output file
+    output_file = open(f"output/{output_filename}.csv", "a")
+    separator = ",.:;,|[]/()"  # to avoid issues with CSV formatting
+    output_file.write(f"Question{separator} RAG answer{separator} Correct answer\n")
+
+    return output_file, separator
 
 
 def evaluate_rag_full(configs: list[ConfigTemplate], dataset: pd.DataFrame, required_columns: list, dataset_directory_path: str) -> None:
     """
     Evaluate the RAG architectures (entire RAG pipeline) on the provided dataset.
+    Creates output/configuration_class_name_<date_time>.csv: Output file containing the evaluation results for each configuration.
 
     :param configs: List of configurations for the RAG architecture.
     :param required_columns: List of required columns. First column should contain the question, second column should contain
@@ -114,9 +137,15 @@ def evaluate_rag_full(configs: list[ConfigTemplate], dataset: pd.DataFrame, requ
         # Initialize the RAG architecture to be evaluated
         rag_architecture = RAGArchitectureFactory(config.rag_architecture_name, config=config)
 
+        # Prepare the output file for the current configuration. Filename format: <configuration_class_name>_<date_time>.csv
+        output_filename = config.__class__.__name__ + "_" + time.strftime("%Y-%m-%d_%H:%M:%S")
+        output_file, separator = prepare_output_file(output_filename)
+
         for file in unique_files:
             question_answer_pairs = dataset[dataset[required_columns[2]] == file][
                 [required_columns[0], required_columns[1]]].values.tolist()
 
             file = Document(dataset_directory_path + file)
-            __evaluate_rag_on_file(rag_architecture, file, question_answer_pairs, vector_database, config.__class__.__name__)
+            __evaluate_rag_on_file(rag_architecture, file, question_answer_pairs, vector_database, output_file, separator)
+
+        output_file.close()
