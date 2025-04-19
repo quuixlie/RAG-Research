@@ -186,3 +186,4 @@ output/
 volumes/
 user.yaml
 embedEtcd.yaml
+docs/
