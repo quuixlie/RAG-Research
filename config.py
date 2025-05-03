@@ -65,7 +65,7 @@ class Config(ConfigTemplate):
         )
 
         # Set logging settings
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
-        )
+        # logging.basicconfig(
+        #     level=logging.info,
+        #     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+        # )

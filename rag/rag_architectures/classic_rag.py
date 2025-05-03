@@ -48,7 +48,7 @@ class ClassicRAG(RAGArchitectureTemplate):
         self.__store_embeddings_with_text_pairs(conversation_id, embeddings_with_text_pairs)
 
 
-    def process_query(self, conversation_id: int, query: str) -> str:
+    def process_query(self, conversation_id: int, query: str) -> dict:
         """
         Process the query to extract relevant information. Returns the answer to the query based on the processed document.
         Conversation ID is used to identify the conversation and retrieve the relevant informations from the vector database collection.
@@ -65,9 +65,16 @@ class ClassicRAG(RAGArchitectureTemplate):
         prompt = create_prompt(query, relevant_documents)
 
         # Generate answer
-        answer = self.llm.generate_response(prompt)
+        answer = self.llm.generate(prompt)
 
-        return answer
+        # Create a response dictionary
+        response = {
+            "query": query,
+            "answer": answer,
+            "relevant_contexts": relevant_documents
+        }
+
+        return response
 
 
     def __prepare_vector_database(self, conversation_id: int) -> None:

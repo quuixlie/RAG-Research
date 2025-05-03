@@ -58,8 +58,25 @@ class LLMFactory(LLMTemplate):
                 raise ValueError(f"Unsupported LLM name: {llm_name}. Please use a valid LLM name.")
         # ============================= Switch between models =============================
 
+    def get_model_name(self):
+        """
+        Returns the name of the model. Function needed by the DeepEvalBaseLLM class.
+        :return: Name of the model
+        """
+        return super().get_model_name()
+    
 
-    def generate_response(self, prompt: str) -> str:
+    def load_model(self):
+        """
+        Load the model. All models are accessible via the API, so no need to load anything.
+        Function needed by the DeepEvalBaseLLM class.
+
+        :return: None
+        """
+        return super().load_model()
+    
+
+    def generate(self, prompt: str) -> str:
         """
         Generate a response based on the provided prompt.
 
@@ -70,8 +87,26 @@ class LLMFactory(LLMTemplate):
         logging.info(f"Generating response for: \n{prompt}")
 
         # Generate response using the LLM
-        response = self.__llm.generate_response(prompt)
+        response = self.__llm.generate(prompt)
 
         logging.info(f"Generated response: \n{response}")
+
+        return response
+    
+
+    async def a_generate(self, prompt: str) -> str:
+        """
+        Asynchronously generate a response based on the provided prompt.
+
+        :param prompt: The input prompt for the LLM
+        :return: Generated response
+        """
+
+        logging.info(f"Generating async response for: \n{prompt}")
+
+        # Generate async response using the LLM
+        response = await self.__llm.a_generate(prompt)
+
+        logging.info(f"Generated async response: \n{response}")
 
         return response

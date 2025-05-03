@@ -29,13 +29,13 @@ class RAGArchitectureTemplate(ABC):
 
 
     @abstractmethod
-    def process_query(self, conversation_id: int, query: str) -> str:
+    def process_query(self, conversation_id: int, query: str) -> dict:
         """
         Process the query to extract relevant information. Returns the answer to the query based on the processed document.
         Conversation ID is used to identify the conversation and retrieve the relevant informations from the vector database collection.
 
         :param conversation_id: ID of the conversation
         :param query: Query to be processed
-        :return: Answer to the query
+        :return: Response to the query
         """
         pass
