@@ -79,11 +79,19 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
         current_row += 1
 
         # Print total
+        print("===================================================================")
         print(f"Total accuracy: {total_accuracy / current_row}")
         print(f"Total faithfulness: {total_faithfulness / current_row}")
         print(f"Total context recall: {total_context_recall / current_row}")
         print(f"Total context precision: {total_context_precision / current_row}")
         print(f"Current row: {current_row}")
         print(f"Current config: {config.__class__.__name__}")
+        print()
+        print(f"Question: {question}")
+        print(f"Correct answer: {correct_answer}")
+        print(f"RAG answer: {rag_answer}")
+        print(f"Relevant contexts: {relevant_contexts}")
+        print(f"RAG contexts: {rag_contexts}")
+        print("===================================================================")
 
             
