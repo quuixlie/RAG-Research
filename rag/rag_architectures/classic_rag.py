@@ -71,7 +71,7 @@ class ClassicRAG(RAGArchitectureTemplate):
         response = {
             "query": query,
             "answer": answer,
-            "relevant_contexts": relevant_documents
+            "contexts": relevant_documents
         }
 
         return response
