@@ -39,3 +39,14 @@ class RAGArchitectureTemplate(ABC):
         :return: Response to the query
         """
         pass
+
+
+    @abstractmethod
+    def remove_conversation(self, conversation_id: int) -> None:
+        """
+        Remove the conversation from the vector database.
+
+        :param conversation_id: ID of the conversation
+        :return: None
+        """
+        pass

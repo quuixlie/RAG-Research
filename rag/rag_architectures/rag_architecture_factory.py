@@ -87,3 +87,13 @@ class RAGArchitectureFactory(RAGArchitectureTemplate):
         :return: Response to the query
         """
         return self.__rag_architecture.process_query(conversation_id, query)
+    
+
+    def remove_conversation(self, conversation_id: int) -> None:
+        """
+        Remove the conversation from the vector database.
+
+        :param conversation_id: ID of the conversation
+        :return: None
+        """
+        return self.__rag_architecture.remove_conversation(conversation_id)

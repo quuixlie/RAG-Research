@@ -26,8 +26,6 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
     :param configs: List of configurations for the RAG architecture.
     :param dataset: Dataset to validate the RAG architectures on.
     """
-    vector_database = VectorDatabase()
-
     total_accuracy = 0
     total_faithfulness = 0
     total_context_recall = 0
@@ -52,7 +50,7 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
                 file = Document(file_path_relative_to_project_root)
 
                 # Make sure the vector database is empty before processing a new file
-                vector_database.remove_collection(2137)
+                rag_architecture.remove_conversation(2137)
 
                 # Process the file 
                 rag_architecture.process_document(2137, file)
