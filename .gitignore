@@ -188,3 +188,5 @@ user.yaml
 embedEtcd.yaml
 docs/
 TheLittlePrince.pdf
+.deepeval-cache.json
+.deepeval_telemetry.txt

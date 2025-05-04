@@ -32,6 +32,7 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
     total_faithfulness = 0
     total_context_recall = 0
     total_context_precision = 0
+    total_hallucination = 0
     for config in configs:
         # Prepare the RAG architecture
         rag_architecture = RAGArchitectureFactory("classic-rag", config=config)
@@ -62,12 +63,14 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
         rag_contexts = rag_response["contexts"]
 
         # Evaluate the RAG architecture on the file
-        accuracy, faithfulness, context_recall, context_precision = full_evaluate(
+        accuracy, faithfulness, context_recall, context_precision, hallucination = full_evaluate(
             question=question,
             correct_answer=correct_answer,
             relevant_contexts=relevant_contexts,
             rag_answer=rag_answer,
             rag_contexts=rag_contexts,
+            evaluation_llm_name=config.evaluation_llm_name,
+            **config.evaluation_kwargs,
         )
 
         # Update the total metrics
@@ -75,15 +78,18 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
         total_faithfulness += faithfulness
         total_context_recall += context_recall
         total_context_precision += context_precision
+        total_hallucination += hallucination
 
         current_row += 1
 
         # Print total
         print("===================================================================")
+        print()
         print(f"Total accuracy: {total_accuracy / current_row}")
         print(f"Total faithfulness: {total_faithfulness / current_row}")
         print(f"Total context recall: {total_context_recall / current_row}")
         print(f"Total context precision: {total_context_precision / current_row}")
+        print(f"Total hallucination: {total_hallucination / current_row}")
         print(f"Current row: {current_row}")
         print(f"Current config: {config.__class__.__name__}")
         print()
@@ -92,6 +98,6 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
         print(f"RAG answer: {rag_answer}")
         print(f"Relevant contexts: {relevant_contexts}")
         print(f"RAG contexts: {rag_contexts}")
+        print()
         print("===================================================================")
 
-            

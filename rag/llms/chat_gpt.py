@@ -14,12 +14,12 @@ class ChatGPT(LLMTemplate):
     :param api_key: API key for the OpenAI API
     """
 
-    def __init__(self, llm_name: str, initial_prompt: str, api_key: str, model: str) -> None:
+    def __init__(self, llm_name: str, initial_prompt: str, api_key: str, model_name: str) -> None:
         super().__init__(llm_name)
         self.initial_prompt = initial_prompt
         self.client = OpenAI(api_key=api_key)
         self.async_client = AsyncOpenAI(api_key=api_key)
-        self.model = model
+        self.model = model_name
 
 
     def get_model_name(self):
@@ -72,7 +72,7 @@ class ChatGPT(LLMTemplate):
         """
 
         try:
-            response = self.async_client.responses.create(
+            response = await self.async_client.responses.create(
                 model = self.model,
                 instructions=self.initial_prompt,
                 input = prompt,

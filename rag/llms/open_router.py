@@ -1,5 +1,5 @@
 from rag.llms.__llm_template import LLMTemplate
-from openai import OpenAI
+from openai import OpenAI, AsyncOpenAI
 
 
 class OpenRouter(LLMTemplate):
@@ -17,7 +17,7 @@ class OpenRouter(LLMTemplate):
         super().__init__(llm_name)
         self.initial_prompt = initial_prompt
         self.client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
-        self.async_client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
+        self.async_client = AsyncOpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
         self.model = model_name
 
 

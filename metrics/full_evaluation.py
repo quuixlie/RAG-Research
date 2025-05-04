@@ -1,3 +1,9 @@
+import os
+from deepeval import evaluate
+from deepeval.test_case import LLMTestCase
+from deepeval.metrics import AnswerRelevancyMetric, FaithfulnessMetric, ContextualPrecisionMetric, ContextualRecallMetric, HallucinationMetric
+from rag.llms.llm_factory import LLMFactory
+
 
 def full_evaluate(
     question: str,
@@ -5,7 +11,9 @@ def full_evaluate(
     relevant_contexts: list[str],
     rag_answer: str,
     rag_contexts: list[str],
-) -> tuple[float, float, float, float]:
+    evaluation_llm_name: str,
+    llm_kwargs: dict,
+) -> tuple[float, float, float, float, float]:
     """
     Evaluate the RAG architecture on the file.
 
@@ -17,18 +25,49 @@ def full_evaluate(
         rag_contexts (list[str]): The contexts used by the RAG architecture to generate the answer.
 
     Returns:
-        tuple[float, float, float, float]: A tuple containing the accuracy, faithfulness, context recall, and context precision.
+        tuple[float, float, float, float, float]: A tuple containing the accuracy, faithfulness, context recall, and context precision, hallucination.
     """
-    # Calculate accuracy
-    accuracy = 1.0 if rag_answer == correct_answer else 0.0
+    llm_name = evaluation_llm_name
+    llm = LLMFactory(llm_name, **llm_kwargs)
+                     
+    # Define the metrics
+    metrics = [
+        AnswerRelevancyMetric(
+            model=llm,
+        ),
+        FaithfulnessMetric(
+            model=llm,
+        ),
+        ContextualRecallMetric(
+            model=llm,
+        ),
+        ContextualPrecisionMetric(
+            model=llm,
+        ),
+        HallucinationMetric(
+            model=llm,
+        ),
+    ]
 
-    # Calculate faithfulness
-    faithfulness = 1.0 if any(context in rag_answer for context in relevant_contexts) else 0.0
+    # Create a test case
+    test_case = LLMTestCase(
+        input=question,
+        actual_output=rag_answer,
+        expected_output=correct_answer,
+        retrieval_context=rag_contexts,
+        context=relevant_contexts,
+    )
 
-    # Calculate context recall
-    context_recall = len(set(rag_contexts) & set(relevant_contexts)) / len(relevant_contexts)
+    # Evaluate the test case
+    result = evaluate(test_cases=[test_case], metrics=metrics)
+    result = result.test_results[0]
+    metrics_data = result.metrics_data
 
-    # Calculate context precision
-    context_precision = len(set(rag_contexts) & set(relevant_contexts)) / len(rag_contexts)
+    # Extract metrics from the test result
+    accuracy = next((m.score for m in metrics_data if m.name == "Answer Relevancy"), 0.0)
+    faithfulness = next((m.score for m in metrics_data if m.name == "Faithfulness"), 0.0)
+    context_recall = next((m.score for m in metrics_data if m.name == "Contextual Recall"), 0.0)
+    context_precision = next((m.score for m in metrics_data if m.name == "Contextual Precision"), 0.0)
+    hallucination = next((m.score for m in metrics_data if m.name == "Hallucination"), 0.0) 
 
-    return accuracy, faithfulness, context_recall, context_precision
+    return accuracy, faithfulness, context_recall, context_precision, hallucination
