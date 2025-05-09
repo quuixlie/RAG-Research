@@ -261,5 +261,88 @@ Jeffrey Dean and Sanjay Ghemawat
             ],
             "file_path_relative_to_project_root": "dataset/papers/mapreduce-osdi04.pdf"
         },
+         {
+        "question": "What are the two user-defined functions that a MapReduce program must implement?",
+        "correct_answer": "A Map function and a Reduce function",
+        "relevant_contexts": [
+            "The user of the MapReduce library expresses the computation as two functions: Map and Reduce.",
+            "Map, written by the user, takes an input pair and produces a set of intermediate key/value pairs. … The Reduce function, also written by the user, accepts an intermediate key I and a set of values for that key."
+        ],
+        "file_path_relative_to_project_root": "dataset/papers/mapreduce-osdi04.pdf"
+        },
+    {
+        "question": "What is the typical size range for input splits in the MapReduce implementation described?",
+        "correct_answer": "Typically 16 MB to 64 MB per split. This is controllable by the user via an optional parameter.",
+        "relevant_contexts": [
+            "The MapReduce library in the user program first splits the input files into M pieces of typically 16 megabytes to 64 megabytes (MB) per piece (controllable by the user via an optional parameter)."
+        ],
+        "file_path_relative_to_project_root": "dataset/papers/mapreduce-osdi04.pdf"
+    },
+    {
+        "question": "What mechanism does MapReduce use to provide fault tolerance against worker failures?",
+        "correct_answer": "Re-execution of failed map or reduce tasks",
+        "relevant_contexts": [
+            "Any map tasks completed by the worker are reset back to their initial idle state, and therefore become eligible for scheduling on other workers.",
+            "Completed map tasks are re-executed on a failure because their output is stored on the local disk(s) of the failed machine and is therefore inaccessible. Completed reduce tasks do not need to be re-executed since their output is stored in a global file system.",
+            "When a map task is executed first by worker A and then later executed by worker B (because A failed)… any reduce task that has not already read the data from worker A will read the data from worker B.",
+
+                "causing groups of 80 machines at a time to become unreachable for several minutes. The MapReduce mastersimply re-executed the work done by the unreachable worker machines, and continued to make forward progress, eventually completing the MapReduce operation.",
+        ],
+        "file_path_relative_to_project_root": "dataset/papers/mapreduce-osdi04.pdf"
+    },
+    {
+        "question": "What mechanism does MapReduce use to provide fault tolerance against worker failures?",
+        "correct_answer": "Re-execution of failed map or reduce tasks",
+        "relevant_contexts": [
+            "Any map tasks completed by the worker are reset back to their initial idle state, and therefore become eligible for scheduling on other workers.",
+            "Completed map tasks are re-executed on a failure because their output is stored on the local disk(s) of the failed machine and is therefore inaccessible. Completed reduce tasks do not need to be re-executed since their output is stored in a global file system.",
+            "When a map task is executed first by worker A and then later executed by worker B (because A failed)… any reduce task that has not already read the data from worker A will read the data from worker B.",
+
+                "causing groups of 80 machines at a time to become unreachable for several minutes. The MapReduce mastersimply re-executed the work done by the unreachable worker machines, and continued to make forward progress, eventually completing the MapReduce operation.",
+        ],
+        "file_path_relative_to_project_root": "dataset/papers/mapreduce-osdi04.pdf"
+    },
+    {
+        "question": "How can the user perform partial aggregation before the shuffle phase?",
+        "question": "What optional function can a user specify to perform partial aggregation before the shuffle phase?",
+        "correct_answer": "By providing an optional Combiner function that does partial merging of data before it is sent over the network.",
+        "correct_answer": "A Combiner function",
+        "relevant_contexts": [
+            "We allow the user to specify an optional Combiner function that does partial merging of this data before it is sent over the network.",
+            "The Combiner function is executed on each machine that performs a map task."
+        ],
+        "file_path_relative_to_project_root": "dataset/papers/mapreduce-osdi04.pdf"
+    },
+    {
+        "question": "What is the definition of “personal data” under the GDPR?",
+        "correct_answer": "Any information relating to an identified or identifiable natural person (‘data subject’), including identifiers such as name, identification number, location data, online identifier, or factors specific to physical, physiological, genetic, mental, economic, cultural or social identity.",
+        "relevant_contexts": [
+            "‘personal data’ means any information relating to an identified or identifiable natural person (‘data subject’); an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person;"
+        ],
+        "file_path_relative_to_project_root": "dataset/regulations/gdpr.pdf"
+    },
+    {
+        "question": "What is the definition of “personal data” under the GDPR?",
+        "correct_answer": "Any information relating to an identified or identifiable natural person (‘data subject’), including identifiers such as name, identification number, location data, online identifier, or factors specific to physical, physiological, genetic, mental, economic, cultural or social identity.",
+        "relevant_contexts": [
+            "‘personal data’ means any information relating to an identified or identifiable natural person (‘data subject’); an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person;"
+        ],
+        "file_path_relative_to_project_root": "dataset/regulations/gdpr.pdf"
+    },
+    {
+        "question": "Simply explain what is 'Controller' under GDPR?",
+        "correct_answer": "A controller is a person or organization that decides why and how personal data is used. Sometimes, the law decides who the controller is or sets rules for choosing one",
+        "relevant_contexts": [
+            "(7) ‘controller’ means the natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the processing of personal data; where the purposes and means of such processing are determined by Union or Member State law, the controller or the specific criteria for its nomination may be provided for by Union or Member State law; "
+        ],
+        "file_path_relative_to_project_root": "dataset/regulations/gdpr.pdf"
+    },
+    {
+        "question": "What fine was imposed on Facebook in 2023 for violating the GDPR?",
+        "correct_answer": "Not found in the text",
+        "relevant_contexts": [],
+        "file_path_relative_to_project_root": "dataset/regulations/gdpr.pdf"
+    },
+
     ]
 
