@@ -56,14 +56,6 @@ class DefaultDataset(DatasetTemplate):
             "question": "Who appears to Hamlet as a ghost?",
             "correct_answer": "His father, King Hamlet.",
             "relevant_contexts": [
-               "",
-            ],
-            "file_path_relative_to_project_root": "dataset/dramas/hamlet.pdf"
-        },
-        {
-            "question": "",
-            "correct_answer": "",
-            "relevant_contexts": [
                 """
                 HAMLET
                 Your loves, as mine to you: farewell.
@@ -116,7 +108,7 @@ trouble me no more!"""
         },
         {
             "question": "",
-            "correct_answer": "",
+            ",
             "relevant_contexts": [
                """
                 I stood up and walked quickly around the
@@ -143,7 +135,7 @@ trouble me no more!"""
         },
         {
             "question": "How many nights did the narrator spy on the old man before the murder?",
-            "correct_answer": "",
+            ",
             "relevant_contexts": [
                """
                Every night about twelve o’clock I slowly opened his door. And
@@ -343,6 +335,41 @@ Jeffrey Dean and Sanjay Ghemawat
         "relevant_contexts": [],
         "file_path_relative_to_project_root": "dataset/regulations/gdpr.pdf"
     },
+    {
+        "question": "Who was the father of Tadeusz?",
+        "correct_answer": "Jacek Soplica, also known as Father Robak was Tadeusz's father.",
+        "relevant_contexts": [
+                "Father Robak, whose real name was Jacek Soplica, and who was Tadeusz’s father, kept his identity secret until near his death.",
+        "He revealed the truth to the Judge and Tadeusz, confessing that he was the same Soplica known from the past."
+        ],
+        "file_path_relative_to_project_root": "dataset/epics/Pan Tadeusz.pdf"
+    },
+    {
+        "question": "During which historical period does the story of Pan Tadeusz take place?",
+        "correct_answer": "The story takes place during the Partition of Poland, more accurately in years 1811 and 1812.",
+        "relevant_contexts": [
+                "The story of Pan Tadeusz takes place over several days in 1811 and one day in 1812, during the Partition of Poland.",
+                "Poland, at the time, had been divided up between Russia, Austria, and Prussia, and had literally disappeared from the political map of Europe."
+  
+            ],
+        "file_path_relative_to_project_root": "dataset/epics/Pan Tadeusz.pdf"
+    },
+    {
+        "question": "Why did Jacek Soplica become Father Robak?",
+  "correct_answer": "Jacek Soplica became Father Robak as an act of penance for his past sins, particularly for killing the Pantler and supporting Russian interests; he joined a monastic order and worked in secret to redeem himself by aiding Polish independence efforts.",
 
+    "relevant_contexts": [
+        "I have not only mourned, I have expiated! I took the penitent's robe and scourge...",
+        "He confessed that he, Jacek Soplica, had once killed the Pantler and later, out of remorse, became a monk—Father Robak—and worked secretly to serve Poland.",
+        "I entered the cloister and fought for Poland as a missionary and agent."
+    ],
+        "file_path_relative_to_project_root": "dataset/epics/Pan Tadeusz.pdf"
+    },
+    {
+        "question": "What is the most dangerous species of a spider?",
+        "correct_answer": "Not in text.",
+        "relevant_contexts": [],
+        "file_path_relative_to_project_root": "dataset/epics/Pan Tadeusz.pdf"
+    }
     ]
 
