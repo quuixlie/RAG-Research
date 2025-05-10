@@ -2,17 +2,18 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
 
+
 class EntryCategory(Enum):
     # easy facts (present in the text).
     FACTOID = 0
     # Definitions
-    DEFINITION  = 1
+    DEFINITION = 1
     # Answers that require some sort of a list as an response
     LIST = 2
     # Answers that require multiple steps or combination of information from many fragments
     CHAIN_OF_THOUGHT = 3
     # testing the ability to come up with logical conclusions
-    INFERENCE = 4 
+    INFERENCE = 4
     # questions that require longer answer
     OPEN_ENDED = 5
     # questions that require short straightforward answer + optional explanation
@@ -30,18 +31,15 @@ class EntryCategory(Enum):
     HYPOTHETICAL = 11
 
     DISTRACTION = 12
-    
-
 
 
 @dataclass
 class DatasetEntry:
-    question:str
-    correct_answer:str
+    question: str
+    correct_answer: str
     relevant_contexts: list[str]
     category: EntryCategory
     file_path: str
-
 
 
 class DatasetTemplate(ABC):
@@ -54,26 +52,18 @@ class DatasetTemplate(ABC):
             "question": "",
             "correct_answer": "",
             "relevant_contexts": [
-               "",
+                "",
             ],
             "file_path_relative_to_project_root": ""
         },
     ]
 
-    def __init__(self,data: list[DatasetEntry] | None = None):
+    def __init__(self, data: list[DatasetEntry] | None = None):
         self.data = []
 
         if data:
             self.data.append(data)
 
     @abstractmethod
-    def load_data(self,path:str) -> list[DatasetEntry]:
+    def load_data(self, path: str) -> list[DatasetEntry]:
         pass
-
-
-
-
-
-
-
-

@@ -5,7 +5,7 @@ from metrics.default_dataset import DefaultDataset
 
 def main():
     config = Config()
-    dataset = DefaultDataset().load_data("./dataset")
+    dataset = DefaultDataset().load_data("dataset")
 
     rag_validation_pipeline(
         configs=[config],
