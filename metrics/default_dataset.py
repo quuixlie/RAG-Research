@@ -370,6 +370,85 @@ Jeffrey Dean and Sanjay Ghemawat
         "correct_answer": "Not in text.",
         "relevant_contexts": [],
         "file_path_relative_to_project_root": "dataset/epics/Pan Tadeusz.pdf"
-    }
+    },
+    {
+        "question": "Which instruments are used in this song?",
+        "correct_answer": "Guitar, strings and harmonica",
+        "relevant_contexts": [
+            "INTRO GUITAR",
+            "SOLO HARMONICA",
+            "OUTRO GUITAR, STRINGS, HARMONICA"
+        ],
+        "file_path_relative_to_project_root": "dataset/lyrics/shape-of-my-heart.pdf"
+    },
+    {
+        "question": "Is the narrator playing cards for money?",
+        "correct_answer": "No — he plays not for money or respect, but as a meditation.",
+        "relevant_contexts": [
+            "He deals the cards to find the answer",
+            "He deals the cards as a meditation",
+            "He don't play for respect",
+            "He doesn't play for the money he wins"
+        ],
+        "file_path_relative_to_project_root": "dataset/lyrics/shape-of-my-heart.pdf"
+    },
+    {
+        "question": "What phases does a machine learning workflow typically include?",
+        "correct_answer": "Training phase, Test phase, Evaluation phase.",
+        "relevant_contexts": [
+            "MACHINE LEARNING WORKFLOW: training phase, test phase, evaluation phase"
+        ],
+        "file_path_relative_to_project_root": "dataset/manuals/ds_intro.pdf"
+    },
+    {
+        "question": "What are the examples of using Machine Learning?",
+        "correct_answer": "Identifying zip code from handwritten digits, detecting communities in social networks, predicting the traffic volume at rush hour, detecting fraudulent credit card transactions and determining the location of distribution centers based on customers’ residence",
+        "relevant_contexts": [
+            "Examples Identifying zip code from handwritten digits Detecting communities in social networks Predicting the traffic volume at rush hour Detecting fraudulent credit card transactions Determining the location of distribution centers based on customers’ residence"
+        ],
+        "file_path_relative_to_project_root": "dataset/manuals/ds_intro.pdf"
+    },
+    {
+        "question": "What can we use to learn from data?",
+        "correct_answer": "Regression, Classification, Clustering",
+        "relevant_contexts": [
+            "LEARNING FROM DATA Regression",
+            "LEARNING FROM DATA Classification",
+            "LEARNING FROM DATA Clustering"
+        ],
+        "file_path_relative_to_project_root": "dataset/manuals/ds_intro.pdf"
+    },
+    {
+        "question": "What is Data Science about?",
+        "correct_answer": "Data Science is about data, models, and evaluation",
+        "relevant_contexts": [
+            "SUMMARY & READING Data Science is about data, models, and evaluation"
+        ],
+        "file_path_relative_to_project_root": "dataset/manuals/ds_intro.pdf"
+    },
+    {
+        "question": "What does CV stand for?",
+        "correct_answer": "CV stands for Curriculum Vitae.",
+        "relevant_contexts": [
+            "CV stands for Curriculum Vitae. Lots of employers still ask for one when you apply for a job."
+        ],
+        "file_path_relative_to_project_root": "dataset/manuals/from-cv-to-interview-2025.pdf"
+    },
+    {
+        "question": "In what order should you list your jobs in the employment section?",
+        "correct_answer": "In most cases, you would order your jobs from most recent to oldest.",
+        "relevant_contexts": [
+            "In most cases, you would order your jobs from most recent to oldest. To keep it relevant and save space, you might include only the last 5 or 6 jobs or the last 10 or 15 years’ worth of experience."
+        ],
+        "file_path_relative_to_project_root": "dataset/manuals/from-cv-to-interview-2025.pdf"
+    },
+    {
+        "question": "What is a speculative letter?",
+        "correct_answer": "This is an email or letter to an employer who hasn’t advertised a job, but may have available the type of work you are looking for.",
+        "relevant_contexts": [
+            "This is an email or letter to an employer who hasn’t advertised a job, but may have available the type of work you are looking for: Try to address your letter/email to a named person to send it to — often the Personnel or Human Resources Manager, the company manager or the owner State your reason you are writing (see example below) Explain why you are interested in working for that employer Tell them what skills and experience you have to offer them. These must be relevant to the type of work you are looking for Make sure you research the company first before writing. This will help you work out what skills they might be looking for. You can then include these in your speculative letter or email."
+        ],
+        "file_path_relative_to_project_root": "dataset/manuals/from-cv-to-interview-2025.pdf"
+    },
     ]
 
