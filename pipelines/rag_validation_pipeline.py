@@ -1,7 +1,7 @@
 from metrics.full_evaluation import full_evaluate
 from config import ConfigTemplate
 from rag.rag_architectures.rag_architecture_factory import RAGArchitectureFactory
-from metrics.dataset_template import DatasetTemplate
+from metrics.dataset_template import DatasetEntry, DatasetTemplate
 from database.vector_database import VectorDatabase
 from pymupdf import Document
 
@@ -18,7 +18,7 @@ def __prepare_dataset(dataset: DatasetTemplate) -> DatasetTemplate:
 
 
 def rag_validation_pipeline(configs: list[ConfigTemplate],
-                            dataset: DatasetTemplate) -> None:
+                            dataset: list[DatasetEntry]) -> None:
     """
     Validate the RAG architectures (entire RAG pipeline) on the provided dataset. It will save the results in the output/
     directory. Validation output for each configuration will be saved in a separate file, named same as the configuration class name.
@@ -38,13 +38,13 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
         file_path_relative_to_project_root = None
         current_row = 0
         # Iterate over the dataset and evaluate the RAG architecture on each file
-        for row in dataset.data:
-            question = row["question"]
-            correct_answer = row["correct_answer"]
-            relevant_contexts = row["relevant_contexts"]
+        for row in dataset:
+            question = row.question
+            correct_answer = row.correct_answer
+            relevant_contexts = row.relevant_contexts
             # If the file path is different from the previous one, process the new file
-            if file_path_relative_to_project_root != row["file_path_relative_to_project_root"]:
-                file_path_relative_to_project_root = row["file_path_relative_to_project_root"]
+            if file_path_relative_to_project_root != row.file_path:
+                file_path_relative_to_project_root = row.file_path
                 
                 # Load the file
                 file = Document(file_path_relative_to_project_root)
