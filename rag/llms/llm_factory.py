@@ -58,23 +58,6 @@ class LLMFactory(LLMTemplate):
                 raise ValueError(f"Unsupported LLM name: {llm_name}. Please use a valid LLM name.")
         # ============================= Switch between models =============================
 
-    def get_model_name(self):
-        """
-        Returns the name of the model. Function needed by the DeepEvalBaseLLM class.
-        :return: Name of the model
-        """
-        return super().get_model_name()
-    
-
-    def load_model(self):
-        """
-        Load the model. All models are accessible via the API, so no need to load anything.
-        Function needed by the DeepEvalBaseLLM class.
-
-        :return: None
-        """
-        return super().load_model()
-    
 
     def generate(self, prompt: str) -> str:
         """

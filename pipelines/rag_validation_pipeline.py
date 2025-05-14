@@ -55,47 +55,47 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
                 # Process the file 
                 rag_architecture.process_document(2137, file)
 
-        # Get RAG response to the question
-        rag_response = rag_architecture.process_query(2137, question)
-        rag_answer = rag_response["answer"]
-        rag_contexts = rag_response["contexts"]
+            # Get RAG response to the question
+            rag_response = rag_architecture.process_query(2137, question)
+            rag_answer = rag_response["answer"]
+            rag_contexts = rag_response["contexts"]
 
-        # Evaluate the RAG architecture on the file
-        accuracy, faithfulness, context_recall, context_precision, hallucination = full_evaluate(
-            question=question,
-            correct_answer=correct_answer,
-            relevant_contexts=relevant_contexts,
-            rag_answer=rag_answer,
-            rag_contexts=rag_contexts,
-            evaluation_llm_name=config.evaluation_llm_name,
-            **config.evaluation_kwargs,
-        )
+            # Evaluate the RAG architecture on the file
+            accuracy, faithfulness, context_recall, context_precision, hallucination = full_evaluate(
+                question=question,
+                correct_answer=correct_answer,
+                relevant_contexts=relevant_contexts,
+                rag_answer=rag_answer,
+                rag_contexts=rag_contexts,
+                evaluation_llm_name=config.evaluation_llm_name,
+                **config.evaluation_kwargs,
+            )
 
-        # Update the total metrics
-        total_accuracy += accuracy
-        total_faithfulness += faithfulness
-        total_context_recall += context_recall
-        total_context_precision += context_precision
-        total_hallucination += hallucination
+            # Update the total metrics
+            total_accuracy += accuracy
+            total_faithfulness += faithfulness
+            total_context_recall += context_recall
+            total_context_precision += context_precision
+            total_hallucination += hallucination
 
-        current_row += 1
+            current_row += 1
 
-        # Print total
-        print("===================================================================")
-        print()
-        print(f"Total accuracy: {total_accuracy / current_row}")
-        print(f"Total faithfulness: {total_faithfulness / current_row}")
-        print(f"Total context recall: {total_context_recall / current_row}")
-        print(f"Total context precision: {total_context_precision / current_row}")
-        print(f"Total hallucination: {total_hallucination / current_row}")
-        print(f"Current row: {current_row}")
-        print(f"Current config: {config.__class__.__name__}")
-        print()
-        print(f"Question: {question}")
-        print(f"Correct answer: {correct_answer}")
-        print(f"RAG answer: {rag_answer}")
-        print(f"Relevant contexts: {relevant_contexts}")
-        print(f"RAG contexts: {rag_contexts}")
-        print()
-        print("===================================================================")
+            # Print total
+            print("===================================================================")
+            print()
+            print(f"Total accuracy: {total_accuracy / current_row}")
+            print(f"Total faithfulness: {total_faithfulness / current_row}")
+            print(f"Total context recall: {total_context_recall / current_row}")
+            print(f"Total context precision: {total_context_precision / current_row}")
+            print(f"Total hallucination: {total_hallucination / current_row}")
+            print(f"Current row: {current_row}")
+            print(f"Current config: {config.__class__.__name__}")
+            print()
+            print(f"Question: {question}")
+            print(f"Correct answer: {correct_answer}")
+            print(f"RAG answer: {rag_answer}")
+            print(f"Relevant contexts: {relevant_contexts}")
+            print(f"RAG contexts: {rag_contexts}")
+            print()
+            print("===================================================================")
 

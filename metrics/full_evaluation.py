@@ -28,24 +28,18 @@ def full_evaluate(
         tuple[float, float, float, float, float]: A tuple containing the accuracy, faithfulness, context recall, and context precision, hallucination.
     """
     llm_name = evaluation_llm_name
-    llm = LLMFactory(llm_name, **llm_kwargs)
                      
     # Define the metrics
     metrics = [
         AnswerRelevancyMetric(
-            model=llm,
         ),
         FaithfulnessMetric(
-            model=llm,
         ),
         ContextualRecallMetric(
-            model=llm,
         ),
         ContextualPrecisionMetric(
-            model=llm,
         ),
         HallucinationMetric(
-            model=llm,
         ),
     ]
 

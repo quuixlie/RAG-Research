@@ -1,5 +1,6 @@
 # ============================ Architectures import ===========================
 from rag.rag_architectures.classic_rag import ClassicRAG
+from rag.rag_architectures.brain_rag import BrainRAG
 # =============================================================================
 
 from rag.rag_architectures.__rag_architecture_template import RAGArchitectureTemplate
@@ -60,6 +61,8 @@ class RAGArchitectureFactory(RAGArchitectureTemplate):
         match rag_architecture_name:
             case "classic-rag":
                 self.__rag_architecture = ClassicRAG(rag_architecture_name, **kwargs)
+            case "brain-rag":
+                self.__rag_architecture = BrainRAG(rag_architecture_name, **kwargs)
             case _:
                 raise ValueError(f"Unsupported RAG architecture name: {rag_architecture_name}. Please use a valid RAG architecture name.")
         # ======================================================================================

@@ -7,7 +7,6 @@ class ChatGPT(LLMTemplate):
     ChatGPT class for generating text using the OpenAI API.
     This class is a wrapper around the OpenAI API for generating text.
     It uses the OpenAI API to generate text based on the provided prompt.
-    It inherits from the LLMTemplate class (DeepEvalBaseLLM).
 
     :param llm_name: Name of the LLM
     :param initial_prompt: Initial prompt for the LLM
@@ -21,25 +20,6 @@ class ChatGPT(LLMTemplate):
         self.async_client = AsyncOpenAI(api_key=api_key)
         self.model = model_name
 
-
-    def get_model_name(self):
-        """
-        Returns the name of the model. Function needed by the DeepEvalBaseLLM class.
-
-        :return: Name of the model
-        """
-        return super().get_model_name()
-    
-
-    def load_model(self):
-        """
-        Load the model. In this case, it is not necessary to load anything as the OpenAI API is used.
-        Function needed by the DeepEvalBaseLLM class.
-
-        :return: None
-        """
-        return super().load_model()
-    
 
     def generate(self, prompt: str) -> str:
         """

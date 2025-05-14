@@ -70,7 +70,7 @@ class Config(ConfigTemplate):
             evaluation_kwargs = {
                 "llm_kwargs": {
                     "api_key": os.getenv("OPENAI_API_KEY"),
-                    "initial_prompt": "You are a helpful assistant.",
+                    "initial_prompt": None,
                     "model_name": "gpt-3.5-turbo",
                 },
             }
