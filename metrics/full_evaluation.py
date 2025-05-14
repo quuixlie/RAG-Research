@@ -39,6 +39,5 @@ def full_evaluate(
     faithfulness = 0.0
     context_recall = 0.0
     context_precision = 0.0
-    hallucination = 0.0
 
-    return accuracy, faithfulness, context_recall, context_precision, hallucination
+    return accuracy, faithfulness, context_recall, context_precision

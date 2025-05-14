@@ -26,14 +26,13 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
     :param configs: List of configurations for the RAG architecture.
     :param dataset: Dataset to validate the RAG architectures on.
     """
-    total_accuracy = 0
-    total_faithfulness = 0
-    total_context_recall = 0
-    total_context_precision = 0
-    total_hallucination = 0
     for config in configs:
+        total_accuracy = 0
+        total_faithfulness = 0
+        total_context_recall = 0
+        total_context_precision = 0
         # Prepare the RAG architecture
-        rag_architecture = RAGArchitectureFactory("classic-rag", config=config)
+        rag_architecture = RAGArchitectureFactory(config.rag_architecture_name, config=config)
 
         file_path_relative_to_project_root = None
         current_row = 0
@@ -76,7 +75,6 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
             total_faithfulness += faithfulness
             total_context_recall += context_recall
             total_context_precision += context_precision
-            total_hallucination += hallucination
 
             current_row += 1
 
@@ -87,7 +85,6 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
             print(f"Total faithfulness: {total_faithfulness / current_row}")
             print(f"Total context recall: {total_context_recall / current_row}")
             print(f"Total context precision: {total_context_precision / current_row}")
-            print(f"Total hallucination: {total_hallucination / current_row}")
             print(f"Current row: {current_row}")
             print(f"Current config: {config.__class__.__name__}")
             print()
