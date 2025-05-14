@@ -1,8 +1,6 @@
 import os
-from deepeval import evaluate
-from deepeval.test_case import LLMTestCase
-from deepeval.metrics import AnswerRelevancyMetric, FaithfulnessMetric, ContextualPrecisionMetric, ContextualRecallMetric, HallucinationMetric
 from rag.llms.llm_factory import LLMFactory
+from metrics.answer_relevancy import answer_relevancy
 
 
 def full_evaluate(
@@ -28,40 +26,19 @@ def full_evaluate(
         tuple[float, float, float, float, float]: A tuple containing the accuracy, faithfulness, context recall, and context precision, hallucination.
     """
     llm_name = evaluation_llm_name
-                     
-    # Define the metrics
-    metrics = [
-        AnswerRelevancyMetric(
-        ),
-        FaithfulnessMetric(
-        ),
-        ContextualRecallMetric(
-        ),
-        ContextualPrecisionMetric(
-        ),
-        HallucinationMetric(
-        ),
-    ]
 
-    # Create a test case
-    test_case = LLMTestCase(
-        input=question,
-        actual_output=rag_answer,
-        expected_output=correct_answer,
-        retrieval_context=rag_contexts,
-        context=relevant_contexts,
+    # Create the LLM
+    llm = LLMFactory(llm_name, **llm_kwargs)
+
+    accuracy =  answer_relevancy(
+        question=question,
+        answer=rag_answer,
+        correct_answer=correct_answer,
+        llm=llm,
     )
-
-    # Evaluate the test case
-    result = evaluate(test_cases=[test_case], metrics=metrics)
-    result = result.test_results[0]
-    metrics_data = result.metrics_data
-
-    # Extract metrics from the test result
-    accuracy = next((m.score for m in metrics_data if m.name == "Answer Relevancy"), 0.0)
-    faithfulness = next((m.score for m in metrics_data if m.name == "Faithfulness"), 0.0)
-    context_recall = next((m.score for m in metrics_data if m.name == "Contextual Recall"), 0.0)
-    context_precision = next((m.score for m in metrics_data if m.name == "Contextual Precision"), 0.0)
-    hallucination = next((m.score for m in metrics_data if m.name == "Hallucination"), 0.0) 
+    faithfulness = 0.0
+    context_recall = 0.0
+    context_precision = 0.0
+    hallucination = 0.0
 
     return accuracy, faithfulness, context_recall, context_precision, hallucination

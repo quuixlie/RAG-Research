@@ -59,6 +59,7 @@ class Config(ConfigTemplate):
                 "api_key": os.getenv("OPENAI_API_KEY"),
                 "initial_prompt": "You are a helpful assistant. Answer the question based on the provided context.",
                 "model_name": "gpt-3.5-turbo",
+                "temperature": 0.6,
             },
             # llm_name = "open-router",
             # llm_kwargs = {
@@ -72,12 +73,13 @@ class Config(ConfigTemplate):
                     "api_key": os.getenv("OPENAI_API_KEY"),
                     "initial_prompt": None,
                     "model_name": "gpt-3.5-turbo",
+                    "temperature": 0,
                 },
             }
         )
 
         # Set logging settings
-        # logging.basicConfig(
-        #     level=logging.INFO,
-        #     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
-        # )
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+        )
