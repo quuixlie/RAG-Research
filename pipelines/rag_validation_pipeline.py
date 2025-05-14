@@ -60,7 +60,7 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
             rag_contexts = rag_response["contexts"]
 
             # Evaluate the RAG architecture on the file
-            accuracy, faithfulness, context_recall, context_precision, hallucination = full_evaluate(
+            accuracy, faithfulness, context_recall, context_precision = full_evaluate(
                 question=question,
                 correct_answer=correct_answer,
                 relevant_contexts=relevant_contexts,
