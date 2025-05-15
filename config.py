@@ -42,24 +42,24 @@ class Config(ConfigTemplate):
     def __init__(self) -> None:
         super().__init__(
             database_kwargs = {
-                "embedding_dimension": 384,
+                "embedding_dimension": 1024, #384,
             },
-            rag_architecture_name = "classic-rag",
+            rag_architecture_name = "brain-rag",
             embedder_name = "basic-embedder",
             embedder_kwargs= {
-                "sentence_transformer_name": "all-MiniLM-L12-v2",
+                "sentence_transformer_name": "mixedbread-ai/mxbai-embed-large-v1",
                 "device": "cuda",
             },
             tokenizer_name = "fixed-size-tokenizer",
             tokenizer_kwargs = {
-                "chunk_size": 256
+                "chunk_size": 512
             },
             llm_name = "chat-gpt",
             llm_kwargs = {
                 "api_key": os.getenv("OPENAI_API_KEY"),
                 "initial_prompt": "You are a helpful assistant. Answer the question based on the provided context.",
                 "model_name": "gpt-3.5-turbo",
-                "temperature": 0.6,
+                "temperature": 0.0,
             },
             # llm_name = "open-router",
             # llm_kwargs = {
