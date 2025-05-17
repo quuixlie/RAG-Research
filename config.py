@@ -7,12 +7,16 @@ class ConfigTemplate:
     Configuration base class for RAG (Retrieval-Augmented Generation).
     """
 
-    def __init__(self, database_kwargs: dict, rag_architecture_name: str, embedder_name: str, embedder_kwargs: dict, tokenizer_name: str, tokenizer_kwargs: dict,
+    def __init__(self, database_kwargs: dict, rag_architecture_name: str, embedder_name: str, embedder_kwargs: dict,
+                 cross_encoder_name: str, cross_encoder_kwargs: dict,
+                 tokenizer_name: str, tokenizer_kwargs: dict,
                  llm_name: str, llm_kwargs: dict, evaluation_llm_name: str, evaluation_kwargs: dict) -> None:
         self.database_kwargs = database_kwargs
         self.rag_architecture_name = rag_architecture_name
         self.embedder_name = embedder_name
         self.embedder_kwargs = embedder_kwargs
+        self.cross_encoder_name = cross_encoder_name
+        self.cross_encoder_kwargs = cross_encoder_kwargs
         self.tokenizer_name = tokenizer_name
         self.tokenizer_kwargs = tokenizer_kwargs
         self.llm_name = llm_name
@@ -28,6 +32,8 @@ class ConfigTemplate:
                 f"  rag_architecture_name: {self.rag_architecture_name},\n"
                 f"  embedder_name: {self.embedder_name},\n"
                 f"  embedder_kwargs: {self.embedder_kwargs},\n"
+                f"  cross_encoder_name: {self.cross_encoder_name},\n"
+                f"  cross_encoder_kwargs: {self.cross_encoder_kwargs},\n"
                 f"  tokenizer_name: {self.tokenizer_name},\n"
                 f"  tokenizer_kwargs: {self.tokenizer_kwargs}\n"
                 f"  llm_name: {self.llm_name},\n"
@@ -44,10 +50,15 @@ class Config(ConfigTemplate):
             database_kwargs = {
                 "embedding_dimension": 1024, #384,
             },
-            rag_architecture_name = "brain-rag",
+            rag_architecture_name = "classic-rag",
             embedder_name = "basic-embedder",
             embedder_kwargs= {
                 "sentence_transformer_name": "mixedbread-ai/mxbai-embed-large-v1",
+                "device": "cuda",
+            },
+            cross_encoder_name = "basic-cross-encoder",
+            cross_encoder_kwargs = {
+                "sentence_transformer_name": "cross-encoder/ms-marco-MiniLM-L-6-v2",
                 "device": "cuda",
             },
             tokenizer_name = "fixed-size-tokenizer",
@@ -57,7 +68,7 @@ class Config(ConfigTemplate):
             llm_name = "chat-gpt",
             llm_kwargs = {
                 "api_key": os.getenv("OPENAI_API_KEY"),
-                "initial_prompt": "You are a helpful assistant. Answer the question based on the provided context.",
+                "initial_prompt": "You are a helpful assistant.",
                 "model_name": "gpt-3.5-turbo",
                 "temperature": 0.0,
             },

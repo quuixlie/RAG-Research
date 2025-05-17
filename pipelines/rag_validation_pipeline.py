@@ -66,6 +66,8 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
                 relevant_contexts=relevant_contexts,
                 rag_answer=rag_answer,
                 rag_contexts=rag_contexts,
+                embedder_name=config.embedder_name,
+                embedder_kwargs=config.embedder_kwargs,
                 evaluation_llm_name=config.evaluation_llm_name,
                 **config.evaluation_kwargs,
             )

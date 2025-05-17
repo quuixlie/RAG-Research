@@ -17,6 +17,9 @@ def answer_relevancy(question: str, answer: str, correct_answer: str, llm: LLMFa
     Returns:
         float: The relevancy score of the answer.
     """
+    if question == "" or answer == "" or correct_answer == "":
+        print("No question, answer, or correct answer provided for evaluation.")
+        return 0.0
     
     # Prompt template
     prompt = f"""You are an expert evaluator tasked with verifying the correctness of answers.
@@ -55,6 +58,8 @@ def answer_relevancy(question: str, answer: str, correct_answer: str, llm: LLMFa
         relevancy_score = 1.0 if response.lower() == "yes" else 0.0
     except Exception as e:
         print(f"Error parsing response: {e}")
+        # Wait if error occurs
+        input("Do you want to continue? (y/n): ")
         relevancy_score = 0.0
 
     return relevancy_score
