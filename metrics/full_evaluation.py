@@ -1,6 +1,7 @@
 import os
 from rag.llms.llm_factory import LLMFactory
 from metrics.answer_relevancy import answer_relevancy
+from metrics.contextual_precision import contextual_precision
 
 
 def full_evaluate(
@@ -38,6 +39,12 @@ def full_evaluate(
     )
     faithfulness = 0.0
     context_recall = 0.0
-    context_precision = 0.0
+
+    context_precision = contextual_precision(
+        question=question,
+        relevant_contexts=relevant_contexts,
+        rag_contexts=rag_contexts,
+        llm=llm
+    )
 
     return accuracy, faithfulness, context_recall, context_precision
