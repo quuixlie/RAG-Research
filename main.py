@@ -1,27 +1,25 @@
 from pipelines.rag_validation_pipeline import rag_validation_pipeline
-from config import Config
+from RAG.config import Config
 from metrics.default_dataset import DefaultDataset, DatasetEntry
-from rag.rag_architectures.rag_architecture_factory import RAGArchitectureFactory
-from pymupdf import Document
+import os
 
 
-def get_questions_from_file(questions:list[DatasetEntry],file_path:str) -> list[DatasetEntry]:
-        return [x for x in questions if x.file_path == file_path]
+def get_questions_from_file(questions:list[DatasetEntry],file_paths:list[str]) -> list[DatasetEntry]:
+    return [x for x in questions if any([os.path.samefile(x.file_path, path) for path in file_paths])]
 
 def main():
     config = Config()
-    dataset = DefaultDataset().load_data("dataset")
-    # Leave only Pan Tadeusz.pdf from dataset
-    dataset = get_questions_from_file(dataset, "dataset/TheLittlePrince.pdf")
+    dataset = DefaultDataset().load_data("./dataset")
+    print("Leaving only questions from TheLittlePrince.pdf")
 
-    # for each file in dataset/ 
-    # import os
-    # for file in os.listdir("dataset"):
-    #     if file.endswith(".pdf"):
-    #         dataset2 = get_questions_from_file(dataset, "dataset/" + file)
-    #         print(f"Processing {file}...")
-    #         for entry in dataset2:
-    #              print("    Question: ", entry.question)
+    files =[
+        "dataset/the_tell-tale_heart_0.pdf",
+        "dataset/TheLittlePrince.pdf"
+    ]
+
+    dataset = get_questions_from_file(dataset, files);
+    print("Filtered questions:",len(dataset))
+
 
     rag_validation_pipeline(
         configs=[config],

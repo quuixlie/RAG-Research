@@ -1,8 +1,7 @@
 from metrics.full_evaluation import full_evaluate
-from config import ConfigTemplate
-from rag.rag_architectures.rag_architecture_factory import RAGArchitectureFactory
+from RAG.config import ConfigTemplate
+from RAG.rag_architectures.rag_architecture_factory import RAGArchitectureFactory
 from metrics.dataset_template import DatasetEntry, DatasetTemplate
-from database.vector_database import VectorDatabase
 from pymupdf import Document
 
 

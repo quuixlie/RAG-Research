@@ -44,27 +44,21 @@ class DefaultDataset(DatasetTemplate):
                 question="Does Hamlet die at the end?",
                 correct_answer="Yes, after being stabbed with a poisoned sword.",
                 relevant_contexts=[
-                    """Heaven make thee free of it! I follow thee.
-                       I am dead, Horatio. Wretched queen, adieu!
-                       You that look pale and tremble at this chance,
-                       That are but mutes or audience to this act,
-                       Had I but time--as this fell sergeant, death,
-                       Is strict in his arrest--O, I could tell you--
-                       But let it be. Horatio, I am dead;
-                       Thou livest; report me and my cause aright
-                       To the unsatisfied.""",
-
+                    """
+                    Heaven make thee free of it! I follow thee.
+                    I am dead, Horatio. Wretched queen, adieu!
+                    """,
                     """
                     HAMLET
                     O, I die, Horatio;
                     The potent poison quite o'er-crows my spirit:
-                    I cannot live to hear the news from England;
-                    But I do prophesy the election lights
-                    On Fortinbras: he has my dying voice;
-                    So tell him, with the occurrents, more and less,
-                    Which have solicited. The rest is silence.
-                    Dies
+                    """,
                     """
+                    HORATIO
+                    Now cracks a noble heart. Good night sweet prince:
+                    And flights of angels sing thee to thy rest!
+                    """
+
                 ],
                 category=EntryCategory.FACTOID,
                 file_path="hamlet.pdf"
@@ -74,13 +68,8 @@ class DefaultDataset(DatasetTemplate):
                 correct_answer="His father, King Hamlet.",
                 relevant_contexts=[
                     """
-                    HAMLET
-                    Your loves, as mine to you: farewell.
                     Exeunt all but HAMLET
                     My father's spirit in arms! all is not well;
-                    I doubt some foul play: would the night were come!
-                    Till then sit still, my soul: foul deeds will rise,
-                    Though all the earth o'erwhelm them, to men's eyes
                     """
                     "Ghost of Hamlet's Father.",
                 ],
@@ -91,13 +80,9 @@ class DefaultDataset(DatasetTemplate):
                 question="Why did he kill the old man?",
                 correct_answer="He was disturbed by his 'vulture eye'",
                 relevant_contexts=[
-                    """His eye was like the eye of a vulture, the eye of one of those
-                         terrible birds that watch and wait while an animal dies, and then fall
-                         upon the dead body and pull it to pieces to eat it. When the old man
-                         looked at me with his vulture eye a cold feeling went up and down my
-                         back; even my blood became cold. And so, I finally decided I had to
-                         kill the old man and close that eye forever!""",
-                    """Yes. He was dead! Dead as a stone. His eye would trouble me no more!"""
+                    "His eye was like the eye of a vulture, the eye of one of those terrible birds that watch and wait while an animal dies, and then fall upon the dead body and pull it to pieces to eat it.",
+                        "When the old man looked at me with his vulture eye a cold feeling went up and down my back; even my blood became cold." 
+                    # And so, I finally decided I had to kill the old man and close that eye forever!
                 ],
                 category=EntryCategory.FACTOID,
                 file_path="the_tell-tale_heart_0.pdf"
@@ -118,7 +103,6 @@ class DefaultDataset(DatasetTemplate):
                 correct_answer="-40 °C (-40 °F) and 85 °C ( 185 °F)",
                 relevant_contexts=[
                     """
-                     2.1 Recommended Operating Conditions
                      Symbol Description Min Max
                      Conservative thermal limits for the whole board: -40 °C (-40 °F) 85 °C ( 185 °F)
                      """,
@@ -133,10 +117,8 @@ class DefaultDataset(DatasetTemplate):
                 question="What does the geographer mean by the term 'ephemeral'?",
                 correct_answer="Which is in danger of speedy disappearance",
                 relevant_contexts=[
-                    "“But what does that mean—'ephemeral'?” repeated the little prince… “It means, 'which is in "
-                    "danger of speedy disappearance.'”",
-                    "'But extinct volcanoes may come to life again,' the little prince interrupted. 'What does that "
-                    "mean 'ephemeral'?"
+                    "“But what does that mean—'ephemeral'?” repeated the little prince… “It means, 'which is in danger of speedy disappearance.'”",
+                    "'But extinct volcanoes may come to life again,' the little prince interrupted. 'What does that mean 'ephemeral'?"
                 ],
                 category=EntryCategory.DEFINITION,
                 file_path="TheLittlePrince.pdf"
@@ -195,7 +177,7 @@ class DefaultDataset(DatasetTemplate):
                 question="What is a speculative letter?",
                 correct_answer="This is an email or letter to an employer who hasn’t advertised a job, but may have available the type of work you are looking for.",
                 relevant_contexts=[
-                    "This is an email or letter to an employer who hasn’t advertised a job, but may have available the type of work you are looking for: Try to address your letter/email to a named person to send it to — often the Personnel or Human Resources Manager, the company manager or the owner State your reason you are writing (see example below) Explain why you are interested in working for that employer Tell them what skills and experience you have to offer them. These must be relevant to the type of work you are looking for Make sure you research the company first before writing. This will help you work out what skills they might be looking for. You can then include these in your speculative letter or email."
+                    "This is an email or letter to an employer who hasn’t advertised a job, but may have available the type of work you are looking for"
                 ],
                 category=EntryCategory.DEFINITION,
                 file_path="from-cv-to-interview-2025.pdf"
@@ -239,7 +221,7 @@ class DefaultDataset(DatasetTemplate):
             ),
             DatasetEntry(
                 question="What are the examples of using Machine Learning?",
-                correct_answer="Identifying zip code from handwritten digits, detecting communities in social networks, predicting the traffic volume at rush hour, detecting fraudulent credit card transactions and determining the location of distribution centers based on customers’ residence",
+                correct_answer="Some examples of Machine learning are: Identifying zip code from handwritten digits, detecting communities in social networks, predicting the traffic volume at rush hour, detecting fraudulent credit card transactions and determining the location of distribution centers based on customers’ residence",
                 relevant_contexts=[
                     "Examples Identifying zip code from handwritten digits Detecting communities in social networks Predicting the traffic volume at rush hour Detecting fraudulent credit card transactions Determining the location of distribution centers based on customers’ residence"
                 ],
@@ -454,10 +436,8 @@ class DefaultDataset(DatasetTemplate):
                 ],
                 category=EntryCategory.COMPARATIVE,
                 file_path="TheLittlePrince.pdf"
-
             )
         ]
-
         summarizations = [
             DatasetEntry(
                 question="Summarize the parable of the baobabs and its moral.",
@@ -573,3 +553,4 @@ class DefaultDataset(DatasetTemplate):
         questions.extend(distractions)
 
         return questions
+

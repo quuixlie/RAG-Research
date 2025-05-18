@@ -1,4 +1,4 @@
-from rag.llms.llm_factory import LLMFactory
+from RAG.llms.llm_factory import LLMFactory
 
 
 def context_precision(question: str, rag_contexts: list[str], correct_answer: str, llm: LLMFactory, async_generate: bool = False) -> float:
