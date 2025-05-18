@@ -1,27 +1,33 @@
 from rag.rag_architectures.__rag_architecture_template import RAGArchitectureTemplate
+from config import ConfigTemplate
+from database.vector_database import VectorDatabase
+from rag.utils.document_parser import parse_to_markdown
+from rag.utils.prompt_builder import create_prompt
 from rag.llms.llm_factory import LLMFactory
 from rag.embedders.embedder_factory import EmbedderFactory
 from rag.tokenizers.tokenizer_factory import TokenizerFactory
-from database.vector_database import VectorDatabase
-from config import ConfigTemplate
+from rag.cross_encoders.cross_encoder_factory import CrossEncoderFactory
 from pymupdf import Document
-from rag.utils.prompt_builder import create_prompt
-from rag.utils.document_parser import parse_to_markdown
 
 
 class BrainRAG(RAGArchitectureTemplate):
     """
+    Brain RAG architecture for generating answers based on a given question and context.
+    This class is a classic implementation of the RAG architecture, which combines a retriever and a generator and
+    uses a cross-encoder to rerank the retrieved documents. But to each fragment it generates a list of questions
+    then splits it and vectorizes it.
 
+    :param rag_architecture_name: Name of the RAG architecture
+    :param config: Configuration object containing RAG settings
     """
 
     def __init__(self, rag_architecture_name: str, config: ConfigTemplate) -> None:
-        self.rag_architecture_name = rag_architecture_name
+        super().__init__(rag_architecture_name)
         self.config = config
         self.embedder = EmbedderFactory(self.config.embedder_name, **self.config.embedder_kwargs)
         self.tokenizer = TokenizerFactory(self.config.tokenizer_name, **self.config.tokenizer_kwargs)
         self.llm = LLMFactory(self.config.llm_name, **self.config.llm_kwargs)
         self.vector_database = VectorDatabase()
-
 
 
     def process_document(self, conversation_id: int, document: Document) -> None:
@@ -33,29 +39,15 @@ class BrainRAG(RAGArchitectureTemplate):
         :param document: Document to be processed
         :return: None
         """
-        # Create a new collection for the conversation
-        self.vector_database.create_collection(conversation_id, dimension=self.config.database_kwargs["embedding_dimension"])
+        # Prepare the vector database for the conversation
+        self.__prepare_vector_database(conversation_id)
 
         # Parse the document to markdown
         parsed_document_to_markdown = parse_to_markdown(document)
-        fragments = self.tokenizer.tokenize(parsed_document_to_markdown)
-        data_to_insert = []
-        for fragment in fragments:
-            # Get the questions to fragment
-            questions = self.get_questions_to_fragment(fragment)
 
-            # Embed the fragment
-            embedding = self.embedder.encode(questions)
-        
-            data_to_insert.append({
-                "text": fragment,
-                "embedding": embedding.tolist(),
-            })
-
-        # Store the embeddings with text pairs in the vector database
-        self.vector_database.insert_data(conversation_id, data_to_insert)
-
-
+        # Embedding
+        embeddings_with_text_pairs = self.__prepare_document_embeddings_with_corresponding_text(parsed_document_to_markdown)
+        self.__store_embeddings_with_text_pairs(conversation_id, embeddings_with_text_pairs)
 
 
     def process_query(self, conversation_id: int, query: str) -> dict:
@@ -65,44 +57,168 @@ class BrainRAG(RAGArchitectureTemplate):
 
         :param conversation_id: ID of the conversation
         :param query: Query to be processed
-        :return: Response to the query
+        :return: Answer to the query
         """
-        query_embedding = self.embedder.encode([query])
 
-        results = self.vector_database.search(conversation_id, query_embedding.tolist())
-
-        # Create a list of relevant documents (text only)
-        result = []
-        for i in results[0]:
-            result.append(i['entity']['text'])  
+        # Get relevant documents to the query
+        relevant_documents = self.__get_relevant_documents_by_query(conversation_id, query)
 
         # Build prompt
-        prompt = create_prompt(query, result)   
+        prompt = create_prompt(query, relevant_documents)
 
         # Generate answer
         answer = self.llm.generate(prompt)
 
+        # Create a response dictionary
         response = {
             "query": query,
             "answer": answer,
-            "contexts": result
+            "contexts": relevant_documents
         }
 
-        return response  
+        return response
 
 
-    def remove_conversation(self, conversation_id: int) -> None:
+    def __prepare_vector_database(self, conversation_id: int) -> None:
         """
-        Remove the conversation from the vector database.
+        Prepare the vector database for a conversation by creating a collection if it doesn't exist.
 
         :param conversation_id: ID of the conversation
         :return: None
         """
+
+        # Create a collection for the conversation if it doesn't exist
+        if not self.vector_database.has_collection(conversation_id):
+            dim = self.config.database_kwargs["embedding_dimension"]
+            self.vector_database.create_collection(conversation_id, dimension=dim)
+
+
+    def remove_conversation(self, conversation_id: int) -> None:
+        """
+        Remove the vector database collection for a conversation if it exists.
+
+        :param conversation_id: ID of the conversation
+        :return: None
+        """
+
         if self.vector_database.has_collection(conversation_id):
-            self.vector_database.remove_collection(conversation_id) 
+            self.vector_database.remove_collection(conversation_id)
 
 
-    def get_questions_to_fragment(self, fragment: str) -> str:
+    def __prepare_document_embeddings_with_corresponding_text(self, document: str) -> list:
+        """
+        Prepare document embeddings by splitting the document into fragments and vectorizing them.
+
+        :param document: Document to be embedded
+        :return: List of document fragments
+        """
+        embeddings_with_text_pairs = []
+        question_fragment_pairs = []
+
+        # Split the document into fragments
+        fragments = self.tokenizer.tokenize(document)
+
+        # Prepare fragments, questions pairs
+        for fragment in fragments:
+            questions = self.get_questions_to_fragment(fragment)
+
+            for question in questions:
+                question_fragment_pairs.append((question, fragment))
+
+        # Merge same questions fragments
+        merged_question_fragment_pairs = {}
+        for question, fragment in question_fragment_pairs:
+            if question not in merged_question_fragment_pairs:
+                merged_question_fragment_pairs[question] = ""
+            merged_question_fragment_pairs[question] += fragment
+
+        print("Merged question fragment pairs: ", merged_question_fragment_pairs)
+
+        # Vectorize the fragments
+        questions = list(merged_question_fragment_pairs.keys())
+        fragments = list(merged_question_fragment_pairs.values())
+        embeddings = self.embedder.encode(questions, show_progress_bar=True)
+
+        # Create a list of dictionaries with text and embedding
+        embeddings_with_text_pairs = [
+            {
+                "text": question,
+                "embedding": embedding.tolist()
+            } for question, embedding in zip(fragments, embeddings)
+        ]
+
+
+        print("Embeddings with text pairs: ", embeddings_with_text_pairs)
+        input("Press Enter to continue...")
+
+        return embeddings_with_text_pairs
+
+
+    def __store_embeddings_with_text_pairs(self, conversation_id: int, data: list) -> None:
+        """
+        Store the embeddings with their corresponding text in the vector database.
+
+        :param conversation_id: ID of the conversation
+        :param data: List of tuples containing embeddings and their corresponding text
+        :return: None
+        """
+
+        self.vector_database.insert_data(conversation_id, data)
+
+
+    def __get_relevant_documents_by_query(self, conversation_id: int, query: str) -> list:
+        """
+        Get relevant documents by processing the query and searching the vector database.
+
+        :param conversation_id: ID of the conversation
+        :param query: Query to be processed
+        :return: List of relevant documents
+        """
+
+        # Embedding
+        query_embedding = self.embedder.encode([query], show_progress_bar=True)
+
+        # Search the vector database
+        results = self.vector_database.search(conversation_id, query_embedding.tolist(), limit=50)
+
+        # Create a list of relevant documents (text only)
+        result = []
+        for i in results[0]:
+            result.append(i['entity']['text'])
+
+        # Rerank the documents using a cross-encoder
+        reranked_documents = self.rerank(query, result, top_k=4)
+
+        return reranked_documents
+    
+
+    def rerank(self, query: str, documents: list, top_k: int = 2) -> list:
+            """
+            Rerank the documents based on the query using a cross-encoder.
+
+            :param query: Query to be processed
+            :param documents: List of documents to be reranked
+            :param top_k: Number of top documents to return
+            :return: List of reranked documents
+            """
+
+            # Create pairs of query and documents
+            query_document_pairs = [(query, doc) for doc in documents]
+
+            # Create a cross-encoder
+            cross_encoder = CrossEncoderFactory(self.config.cross_encoder_name, **self.config.cross_encoder_kwargs)
+
+            # Calculate scores for each pair
+            scores = cross_encoder.compare(query_document_pairs)
+
+            # Sort the documents based on the scores (higher is better)
+            sorted_documents = sorted(zip(documents, scores), key=lambda x: x[1], reverse=True)
+
+            # Return the top_k documents
+            return [doc for doc, score in sorted_documents[:top_k]]
+    
+
+    def get_questions_to_fragment(self, fragment: str) -> list:
         """
         Get the questions to fragment.
 
@@ -128,5 +244,8 @@ class BrainRAG(RAGArchitectureTemplate):
         
         # Generate the questions using the LLM
         questions = self.llm.generate(prompt)
+
+        # Split the questions into a list
+        questions = questions.split("\n")
 
         return questions

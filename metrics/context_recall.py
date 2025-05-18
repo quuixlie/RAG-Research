@@ -11,7 +11,7 @@ def context_recall(
     embedder_name: str = "basic-embedder",
     embedder_kwargs: dict = {
         "sentence_transformer_name": "mixedbread-ai/mxbai-embed-large-v1",
-        "device": "cpu",  # consider auto-detect
+        "device": "cpu", 
     }
 ) -> float:
     """
@@ -36,7 +36,6 @@ def context_recall(
         return 0.0
 
     # GPU memory limit pass
-    embedder_kwargs["device"] = "cpu"
     embedder = EmbedderFactory(embedder_name, **embedder_kwargs)
 
     try:

@@ -116,7 +116,7 @@ class VectorDatabase:
         self.client.flush(collection_name)
 
 
-    def search(self, conversation_id: int, query_embedding: list):
+    def search(self, conversation_id: int, query_embedding: list, limit: int = 5):
         """
         This function searches for similar data in the vector database.
 
@@ -134,7 +134,7 @@ class VectorDatabase:
         try:
             results = self.client.search(collection_name, anns_field="embedding", data=query_embedding,
                                          search_params=search_params,
-                                         limit=5, output_fields=["text"])
+                                         limit=limit, output_fields=["text"])
         finally:
             self.client.release_collection(collection_name)
 

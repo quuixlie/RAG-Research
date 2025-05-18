@@ -1,5 +1,6 @@
 # ============================ Models import ===========================
 from rag.embedders.basic_embedder import BasicEmbedder
+from rag.embedders.openai_embedder import OpenAIEmbedder
 # ======================================================================
 
 
@@ -53,6 +54,8 @@ class EmbedderFactory(EmbedderTemplate):
         match embedder_name:
             case "basic-embedder":
                 self.__embedder = BasicEmbedder(embedder_name, **kwargs)
+            case "openai-embedder":
+                self.__embedder = OpenAIEmbedder(embedder_name, **kwargs)
             case _:
                 raise ValueError(f"Unsupported embedder name: {embedder_name}. Please use a valid embedder name.")
         # =================================================================================

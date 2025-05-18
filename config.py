@@ -51,10 +51,16 @@ class Config(ConfigTemplate):
                 "embedding_dimension": 1024, #384,
             },
             rag_architecture_name = "classic-rag",
-            embedder_name = "basic-embedder",
-            embedder_kwargs= {
-                "sentence_transformer_name": "mixedbread-ai/mxbai-embed-large-v1",
-                "device": "cuda",
+            # embedder_name = "basic-embedder",
+            # embedder_kwargs= {
+            #     "sentence_transformer_name": "mixedbread-ai/mxbai-embed-large-v1",
+            #     "device": "cuda",
+            # },
+            embedder_name= "openai-embedder",
+            embedder_kwargs = {
+                "api_key": os.getenv("OPENAI_API_KEY"),
+                "model_name": "text-embedding-3-small",
+                "dimension": 1024,
             },
             cross_encoder_name = "basic-cross-encoder",
             cross_encoder_kwargs = {
@@ -63,7 +69,7 @@ class Config(ConfigTemplate):
             },
             tokenizer_name = "fixed-size-tokenizer",
             tokenizer_kwargs = {
-                "chunk_size": 512
+                "chunk_size": 2048,
             },
             llm_name = "chat-gpt",
             llm_kwargs = {

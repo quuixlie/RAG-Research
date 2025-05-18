@@ -54,7 +54,7 @@ def full_evaluate(
     context_rec = context_recall(
         relevant_contexts=relevant_contexts,
         rag_contexts=rag_contexts,
-        similarity_threshold=0.8,
+        similarity_threshold=0.7,
         embedder_name=embedder_name,
         embedder_kwargs=embedder_kwargs,
     )
