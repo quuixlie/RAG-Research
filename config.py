@@ -48,7 +48,7 @@ class Config(ConfigTemplate):
     def __init__(self) -> None:
         super().__init__(
             database_kwargs = {
-                "embedding_dimension": 1024, #384,
+                "embedding_dimension": 8, #384,
             },
             rag_architecture_name = "classic-rag",
             # embedder_name = "basic-embedder",
@@ -60,7 +60,7 @@ class Config(ConfigTemplate):
             embedder_kwargs = {
                 "api_key": os.getenv("OPENAI_API_KEY"),
                 "model_name": "text-embedding-3-small",
-                "dimension": 1024,
+                "dimension": 8,
             },
             cross_encoder_name = "basic-cross-encoder",
             cross_encoder_kwargs = {
@@ -69,7 +69,7 @@ class Config(ConfigTemplate):
             },
             tokenizer_name = "fixed-size-tokenizer",
             tokenizer_kwargs = {
-                "chunk_size": 2048,
+                "chunk_size": 1024,
             },
             llm_name = "chat-gpt",
             llm_kwargs = {
