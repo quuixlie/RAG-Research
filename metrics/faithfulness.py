@@ -1,4 +1,4 @@
-from RAG.llms.llm_factory import LLMFactory
+from source.llms.llm_factory import LLMFactory
 
 
 def faithfulness(question: str, answer: str, rag_contexts: list[str], llm: LLMFactory) -> float:

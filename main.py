@@ -1,5 +1,5 @@
 from pipelines.rag_validation_pipeline import rag_validation_pipeline
-from RAG.config import Config
+from config import Config
 from metrics.default_dataset import DefaultDataset, DatasetEntry
 import os
 

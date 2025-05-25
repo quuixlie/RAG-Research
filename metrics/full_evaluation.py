@@ -1,5 +1,5 @@
 import os
-from RAG.llms.llm_factory import LLMFactory
+from source.llms.llm_factory import LLMFactory
 from metrics.answer_relevancy import answer_relevancy
 from metrics.context_precision import context_precision
 from metrics.context_recall import context_recall

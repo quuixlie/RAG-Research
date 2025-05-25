@@ -1,5 +1,5 @@
-from RAG.config import ConfigTemplate
-from RAG.rag_architectures.rag_architecture_factory import RAGArchitectureFactory
+from config import ConfigTemplate
+from source.rag_architectures.rag_architecture_factory import RAGArchitectureFactory
 from pymupdf import Document
 
 
