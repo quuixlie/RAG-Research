@@ -1,9 +1,8 @@
-from source.llms.llm_factory import LLMFactory
-import time
+from src.llms.llm import LLM
 
 
 
-def answer_relevancy(question: str, answer: str, correct_answer: str, llm: LLMFactory, async_generate: bool = False) -> float:
+def answer_relevancy(question: str, answer: str, correct_answer: str, llm: LLM, async_generate: bool = False) -> float:
     """
     Evaluate the answer relevancy using the LLM.
 

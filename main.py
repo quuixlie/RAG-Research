@@ -1,5 +1,5 @@
 from pipelines.rag_validation_pipeline import rag_validation_pipeline
-from config import Config
+from src.config import default_config 
 from metrics.default_dataset import DefaultDataset, DatasetEntry
 import os
 
@@ -8,7 +8,7 @@ def get_questions_from_file(questions:list[DatasetEntry],file_paths:list[str]) -
     return [x for x in questions if any([os.path.samefile(x.file_path, path) for path in file_paths])]
 
 def main():
-    config = Config()
+    config = default_config
     dataset = DefaultDataset().load_data("./dataset")
     print("Leaving only questions from TheLittlePrince.pdf")
 

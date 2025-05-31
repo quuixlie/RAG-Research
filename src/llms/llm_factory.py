@@ -1,95 +1,51 @@
-# ============================ Models import ===========================
+from pydantic import BaseModel
+from pydantic.fields import Field
 from .chat_gpt import ChatGPT
 from .open_router import OpenRouter
-# ======================================================================
-
-from .__llm_template import LLMTemplate
+from typing import Literal, Optional,Annotated,get_args
+from .llm import LLM
 import logging
 
 
-class LLMFactory(LLMTemplate):
-    """
-    Factory class for creating LLMs. This class allows you to set the LLM model by calling the set_llm method
-    with the desired LLM name. Then, you can use the generate_response method to generate text.
-    You have to pass an existing LLM model and its parameters to the constructor.
+LLMType = Literal["openai","open-router"]
+OpenAIModelName = Literal["gpt-3.5-turbo","gpt-4"]
+OpenRouterModelName = Literal["deepseek/deepseek-r1-0528-qwen3-8b:free"]
+LLMModelName = OpenAIModelName | OpenRouterModelName
 
-    :param llm_name: Name of the LLM to be set
-    :param kwargs: Additional parameters for the LLM model
-    """
-
-    def __init__(self, llm_name: str, **kwargs) -> None:
-        super().__init__(llm_name)
-        self.__llm = None
-        self.set_llm(llm_name, **kwargs)
+class LLMKwargs(BaseModel):
+    api_key:Optional[str] = None
+    initial_prompt:Optional[str] = None
+    model_name: LLMModelName = "deepseek/deepseek-r1-0528-qwen3-8b:free"
+    temperature: Annotated[float, Field(ge=0.0,le=1.0)] = 0.0
 
 
-    def set_llm(self, llm_name: str, **kwargs) -> None:
-        """
-        Set the LLM name and change the LLM model.
-        (If the new LLM name is different from the current one, change the LLM model)
+def llm_factory(llm_type:LLMType,kwargs: LLMKwargs) -> LLM:
+    logging.info(f"Creating LLM from type: {llm_type} and model: {kwargs.model_name}")
+    match llm_type:
 
-        :param llm_name: Name of the LLM to be set
-        :return: None
-        """
+        case "openai":
 
-        # If the new LLM name is different from the current one, change the LLM (model)
-        if self.llm_name != llm_name or self.__llm is None:
-            self.__change_llm(llm_name, **kwargs)
+            if kwargs.model_name not in get_args(OpenAIModelName):
+                logging.error("| llm_factory | Wrong model specified for openai LLM: {}, Available models are: ".format(kwargs.model_name,get_args(OpenAIModelName)))
+                exit(-1)
 
+            if kwargs.api_key is None:
+                logging.error("| llm_factory | No API_KEY specified for chat-gpt LLM")
+                exit(-1)
 
-    def __change_llm(self, llm_name: str, **kwargs) -> None:
-        """
-        Change the LLM according to the specified name.
+            return ChatGPT(llm_name=kwargs.model_name,initial_prompt=kwargs.initial_prompt, api_key=kwargs.api_key,model_name=kwargs.model_name,temperature=kwargs.temperature)
 
-        :param llm_name: Name of the LLM to be set
-        :return: None
-        """
+        case "open-router":
 
-        # Set the LLM name
-        self.llm_name = llm_name
+            if kwargs.model_name not in get_args(OpenRouterModelName):
+                logging.error("| llm_factory | Wrong model specified for open-router LLM: {}, Available models are: {}".format(kwargs.model_name,get_args(OpenRouterModelName)))
+                exit(-1)
 
-        # ============================= Switch between models =============================
-        match llm_name:
-            case "chat-gpt":
-                self.__llm = ChatGPT(llm_name, **kwargs)
-            case "open-router":
-                self.__llm = OpenRouter(llm_name, **kwargs)
-            case _:
-                raise ValueError(f"Unsupported LLM name: {llm_name}. Please use a valid LLM name.")
-        # ============================= Switch between models =============================
+            if kwargs.api_key is None:
+                logging.error("| llm_factory | No API_KEY specified for open-router LLM")
+                exit(-1)
 
+            return OpenRouter(llm_name=kwargs.model_name,initial_prompt=kwargs.initial_prompt,api_key=kwargs.api_key,model_name=kwargs.model_name)
 
-    def generate(self, prompt: str) -> str:
-        """
-        Generate a response based on the provided prompt.
-
-        :param prompt: The input prompt for the LLM
-        :return: Generated response
-        """
-
-        logging.info(f"Generating response for: \n{prompt}")
-
-        # Generate response using the LLM
-        response = self.__llm.generate(prompt)
-
-        logging.info(f"Generated response: \n{response}")
-
-        return response
-    
-
-    async def a_generate(self, prompt: str) -> str:
-        """
-        Asynchronously generate a response based on the provided prompt.
-
-        :param prompt: The input prompt for the LLM
-        :return: Generated response
-        """
-
-        logging.info(f"Generating async response for: \n{prompt}")
-
-        # Generate async response using the LLM
-        response = await self.__llm.a_generate(prompt)
-
-        logging.info(f"Generated async response: \n{response}")
-
-        return response
+        case _:
+            raise ValueError(f"Unsupported LLM type: {llm_type}. Please use a valid LLM name.")

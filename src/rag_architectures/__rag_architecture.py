@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from pymupdf import Document
 
 
-class RAGArchitectureTemplate(ABC):
+class RAGArchitecture(ABC):
     """
     Base class for RAG architectures. This class defines the interface for RAG architectures, which are used to
     generate answers based on a given question and context. A new RAG architecture can be created by inheriting from this

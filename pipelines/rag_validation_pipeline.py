@@ -1,22 +1,12 @@
 from metrics.full_evaluation import full_evaluate
-from config import ConfigTemplate
-from source.rag_architectures.rag_architecture_factory import RAGArchitectureFactory
-from metrics.dataset_template import DatasetEntry, DatasetTemplate
+from src.config import Config
+from src.rag_architectures.rag_architecture_factory import rag_architecture_factory
+from metrics.dataset_template import DatasetEntry
 from pymupdf import Document
 
 
-def __prepare_dataset(dataset: DatasetTemplate) -> DatasetTemplate:
-    """
-    Preprocess the dataset to ensure it is in the correct format.
 
-    :param dataset: Dataset to preprocess.
-    :return: Preprocessed dataset.
-    """
-
-    return dataset
-
-
-def rag_validation_pipeline(configs: list[ConfigTemplate],
+def rag_validation_pipeline(configs: list[Config],
                             dataset: list[DatasetEntry]) -> None:
     """
     Validate the RAG architectures (entire RAG pipeline) on the provided dataset. It will save the results in the output/
@@ -31,7 +21,7 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
         total_context_recall = 0
         total_context_precision = 0
         # Prepare the RAG architecture
-        rag_architecture = RAGArchitectureFactory(config.rag_architecture_name, config=config)
+        rag_architecture = rag_architecture_factory(config=config)
 
         file_path_relative_to_project_root = None
         current_row = 0
@@ -65,10 +55,7 @@ def rag_validation_pipeline(configs: list[ConfigTemplate],
                 relevant_contexts=relevant_contexts,
                 rag_answer=rag_answer,
                 rag_contexts=rag_contexts,
-                embedder_name=config.embedder_name,
-                embedder_kwargs=config.embedder_kwargs,
-                evaluation_llm_name=config.evaluation_llm_name,
-                **config.evaluation_kwargs,
+                config=config
             )
 
             # Update the total metrics

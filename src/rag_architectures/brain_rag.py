@@ -1,16 +1,19 @@
 from pymupdf import Document
-from ...config import ConfigTemplate
-from ..database.vector_database import VectorDatabase
-from .__rag_architecture_template import RAGArchitectureTemplate
+from ..databases.vector_database import VectorDatabase
+from .__rag_architecture import RAGArchitecture
 from ..utils.document_parser import parse_to_markdown
 from ..utils.prompt_builder import create_prompt
-from ..llms.llm_factory import LLMFactory
-from ..embedders.embedder_factory import EmbedderFactory
-from ..tokenizers.tokenizer_factory import TokenizerFactory
-from ..cross_encoders.cross_encoder_factory import CrossEncoderFactory
+from ..llms.llm_factory import llm_factory
+from ..embedders.embedders import embedder_factory
+from ..text_splitters.text_splitter import text_splitter_factory
 
 
-class BrainRAG(RAGArchitectureTemplate):
+# Avoid ciruclar import
+import typing
+if typing.TYPE_CHECKING:
+    from ..config import Config
+
+class BrainRAG(RAGArchitecture):
     """
     Brain RAG architecture for generating answers based on a given question and context.
     This class is a classic implementation of the RAG architecture, which combines a retriever and a generator and
@@ -21,12 +24,12 @@ class BrainRAG(RAGArchitectureTemplate):
     :param config: Configuration object containing RAG settings
     """
 
-    def __init__(self, rag_architecture_name: str, config: ConfigTemplate) -> None:
+    def __init__(self, rag_architecture_name: str, config: 'Config') -> None:
         super().__init__(rag_architecture_name)
         self.config = config
-        self.embedder = EmbedderFactory(self.config.embedder_name, **self.config.embedder_kwargs)
-        self.tokenizer = TokenizerFactory(self.config.tokenizer_name, **self.config.tokenizer_kwargs)
-        self.llm = LLMFactory(self.config.llm_name, **self.config.llm_kwargs)
+        self.embedder = embedder_factory(config.embedder_name,config.embedder_kwargs)
+        self.text_splitter = text_splitter_factory(config.text_splitter_name,config.text_splitter_kwargs)
+        self.llm = llm_factory(config.llm_type,**config.llm_kwargs.model_dump())
         self.vector_database = VectorDatabase()
 
 
@@ -115,16 +118,16 @@ class BrainRAG(RAGArchitectureTemplate):
         embeddings_with_text_pairs = []
 
         # Split the document into fragments
-        fragments = self.tokenizer.tokenize(document)
+        fragments = self.text_splitter.split_text(document)
 
         # Prepare fragments, questions pairs
         for fragment in fragments:
             questions = self.get_questions_to_fragment(fragment)
             questions += f" {fragment}"
-            embedding = self.embedder.encode([questions], show_progress_bar=True)
+            embedding = self.embedder.embed_query(questions)
             embeddings_with_text_pairs.append({
                 "text": fragment,
-                "embedding": embedding[0].tolist()
+                "embedding": embedding[0]
             })
 
         return embeddings_with_text_pairs
@@ -152,10 +155,10 @@ class BrainRAG(RAGArchitectureTemplate):
         """
 
         # Embedding
-        query_embedding = self.embedder.encode([query], show_progress_bar=True)
+        query_embedding = self.embedder.embed_query(query)
 
         # Search the vector database
-        results = self.vector_database.search(conversation_id, query_embedding.tolist(), limit=20)
+        results = self.vector_database.search(conversation_id, query_embedding, limit=20)
 
         # Create a list of relevant documents (text only)
         result = []
@@ -164,7 +167,6 @@ class BrainRAG(RAGArchitectureTemplate):
 
         # Rerank the documents using a cross-encoder
         reranked_documents = self.rerank(query, result, top_k=4)
-
         return reranked_documents
     
 

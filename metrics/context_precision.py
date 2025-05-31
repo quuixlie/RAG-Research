@@ -1,7 +1,7 @@
-from source.llms.llm_factory import LLMFactory
+from src.llms.llm import LLM
 
 
-def context_precision(question: str, rag_contexts: list[str], correct_answer: str, llm: LLMFactory, async_generate: bool = False) -> float:
+def context_precision(question: str, rag_contexts: list[str], correct_answer: str, llm: LLM, async_generate: bool = False) -> float:
     """
     Evaluate the context precision of the RAG system using the LLM.
 

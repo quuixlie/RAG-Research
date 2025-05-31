@@ -1,16 +1,22 @@
-from ...config import ConfigTemplate
-from ..database.vector_database import VectorDatabase
-from .__rag_architecture_template import RAGArchitectureTemplate
+from src.cross_encoders.cross_encoder_factory import cross_encoder_factory
+from ..databases.vector_database import VectorDatabase
+from .__rag_architecture import RAGArchitecture
 from ..utils.document_parser import parse_to_markdown
 from ..utils.prompt_builder import create_prompt
-from ..llms.llm_factory import LLMFactory
-from ..embedders.embedder_factory import EmbedderFactory
-from ..tokenizers.tokenizer_factory import TokenizerFactory
-from ..cross_encoders.cross_encoder_factory import CrossEncoderFactory
+from ..llms.llm_factory import llm_factory
+from ..embedders.embedders import embedder_factory
+from ..text_splitters.text_splitter import text_splitter_factory
+# from ..cross_encoders.cross_encoder_factory import CrossEncoderFactory
 from pymupdf import Document
 
 
-class ClassicRAG(RAGArchitectureTemplate):
+# Avoid ciruclar import
+import typing
+if typing.TYPE_CHECKING:
+    from ..config import Config
+
+
+class ClassicRAG(RAGArchitecture):
     """
     Classic RAG architecture for generating answers based on a given question and context.
     This class is a classic implementation of the RAG architecture, which combines a retriever and a generator.
@@ -20,12 +26,13 @@ class ClassicRAG(RAGArchitectureTemplate):
     :param config: Configuration object containing RAG settings
     """
 
-    def __init__(self, rag_architecture_name: str, config: ConfigTemplate) -> None:
+    def __init__(self, rag_architecture_name: str, config: 'Config') -> None:
         super().__init__(rag_architecture_name)
         self.config = config
-        self.embedder = EmbedderFactory(self.config.embedder_name, **self.config.embedder_kwargs)
-        self.tokenizer = TokenizerFactory(self.config.tokenizer_name, **self.config.tokenizer_kwargs)
-        self.llm = LLMFactory(self.config.llm_name, **self.config.llm_kwargs)
+        self.embedder = embedder_factory(config.embedder_name,config.embedder_kwargs)
+        self.text_splitter = text_splitter_factory(config.text_splitter_name,config.text_splitter_kwargs)
+        self.cross_encoder = cross_encoder_factory(config.cross_encoder_name,config.cross_encoder_kwargs)
+        self.llm = llm_factory(self.config.llm_type, config.llm_kwargs)
         self.vector_database = VectorDatabase()
 
 
@@ -88,7 +95,7 @@ class ClassicRAG(RAGArchitectureTemplate):
 
         # Create a collection for the conversation if it doesn't exist
         if not self.vector_database.has_collection(conversation_id):
-            dim = self.config.database_kwargs["embedding_dimension"]
+            dim = self.config.database_kwargs.embedding_dimension
             self.vector_database.create_collection(conversation_id, dimension=dim)
 
 
@@ -113,16 +120,16 @@ class ClassicRAG(RAGArchitectureTemplate):
         """
 
         # Split the document into fragments
-        fragments = self.tokenizer.tokenize(document)
+        fragments = self.text_splitter.split_text(document)
 
         # Vectorize the fragments
-        embeddings = self.embedder.encode(fragments, show_progress_bar=True)
+        embeddings = self.embedder.embed_documents(fragments)
 
         # Create a list of dictionaries with text and embedding
         embeddings_with_text_pairs = [
             {
                 "text": fragment,
-                "embedding": embedding.tolist()
+                "embedding": embedding,
             } for fragment, embedding in zip(fragments, embeddings)
         ]
 
@@ -151,10 +158,10 @@ class ClassicRAG(RAGArchitectureTemplate):
         """
 
         # Embedding
-        query_embedding = self.embedder.encode([query], show_progress_bar=True)
+        query_embedding = self.embedder.embed_query(query)
 
         # Search the vector database
-        results = self.vector_database.search(conversation_id, query_embedding.tolist(), limit=20)
+        results = self.vector_database.search(conversation_id, [query_embedding], limit=20)
 
         # Create a list of relevant documents (text only)
         result = []
@@ -180,14 +187,11 @@ class ClassicRAG(RAGArchitectureTemplate):
             # Create pairs of query and documents
             query_document_pairs = [(query, doc) for doc in documents]
 
-            # Create a cross-encoder
-            cross_encoder = CrossEncoderFactory(self.config.cross_encoder_name, **self.config.cross_encoder_kwargs)
-
             # Calculate scores for each pair
-            scores = cross_encoder.compare(query_document_pairs)
+            scores = self.cross_encoder.compare(query_document_pairs)
 
             # Sort the documents based on the scores (higher is better)
             sorted_documents = sorted(zip(documents, scores), key=lambda x: x[1], reverse=True)
 
             # Return the top_k documents
-            return [doc for doc, score in sorted_documents[:top_k]]
+            return [doc for doc, _ in sorted_documents[:top_k]]

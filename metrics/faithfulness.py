@@ -1,7 +1,7 @@
-from source.llms.llm_factory import LLMFactory
+from src.llms.llm import LLM
 
 
-def faithfulness(question: str, answer: str, rag_contexts: list[str], llm: LLMFactory) -> float:
+def faithfulness(question: str, answer: str, rag_contexts: list[str], llm: LLM) -> float:
     """
     Evaluate the faithfulness of the RAG architecture.
 

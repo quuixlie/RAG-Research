@@ -1,8 +1,9 @@
-from .__llm_template import LLMTemplate
+from .llm import LLM
+from typing import Optional
 from openai import OpenAI, AsyncOpenAI
+import logging
 
-
-class ChatGPT(LLMTemplate):
+class ChatGPT(LLM):
     """
     ChatGPT class for generating text using the OpenAI API.
     This class is a wrapper around the OpenAI API for generating text.
@@ -13,7 +14,7 @@ class ChatGPT(LLMTemplate):
     :param api_key: API key for the OpenAI API
     """
 
-    def __init__(self, llm_name: str, initial_prompt: str, api_key: str, model_name: str, temperature: float) -> None:
+    def __init__(self, llm_name: str, initial_prompt: Optional[str], api_key: str, model_name: str, temperature: float) -> None:
         super().__init__(llm_name)
         self.initial_prompt = initial_prompt
         self.client = OpenAI(api_key=api_key)
@@ -40,7 +41,8 @@ class ChatGPT(LLMTemplate):
             )
             response = response.output_text
         except Exception as e: # Return error
-            response = e
+            logging.error(f"| ChatGPTLLM::generate | Couldn't generate response (Reason: {repr(e)}")
+            response = repr(e)
 
         return response
 
@@ -62,6 +64,7 @@ class ChatGPT(LLMTemplate):
             )
             response = response.output_text
         except Exception as e: # Return error
-            response = e
+            logging.error(f"| ChatGPTLLM::a_generate | Couldn't generate response (Reason: {repr(e)}")
+            response = repr(e)
 
         return response

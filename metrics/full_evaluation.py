@@ -1,5 +1,6 @@
-import os
-from source.llms.llm_factory import LLMFactory
+from src.config import Config
+from src.llms.llm_factory import llm_factory
+from src.embedders.embedders import embedder_factory
 from metrics.answer_relevancy import answer_relevancy
 from metrics.context_precision import context_precision
 from metrics.context_recall import context_recall
@@ -12,11 +13,8 @@ def full_evaluate(
     relevant_contexts: list[str],
     rag_answer: str,
     rag_contexts: list[str],
-    embedder_name: str,
-    embedder_kwargs: dict,
-    evaluation_llm_name: str,
-    llm_kwargs: dict,
-) -> tuple[float, float, float, float, float]:
+    config:Config,
+) -> tuple[float, float, float, float]:
     """
     Evaluate the RAG architecture on the file.
 
@@ -32,12 +30,12 @@ def full_evaluate(
         llm_kwargs (dict): The arguments for the LLM.
 
     Returns:
-        tuple[float, float, float, float, float]: A tuple containing the accuracy, faithfulness, context recall, and context precision, hallucination.
+        tuple[float, float, float, float]: A tuple containing the accuracy, faithfulness, context recall, and context precision.
     """
-    llm_name = evaluation_llm_name
 
     # Create the LLM
-    llm = LLMFactory(llm_name, **llm_kwargs)
+    llm = llm_factory(config.llm_type,config.llm_kwargs)
+    embedder = embedder_factory(config.embedder_name,config.embedder_kwargs)
 
     accuracy =  answer_relevancy(
         question=question,
@@ -54,9 +52,8 @@ def full_evaluate(
     context_rec = context_recall(
         relevant_contexts=relevant_contexts,
         rag_contexts=rag_contexts,
+        embedder=embedder,
         similarity_threshold=0.7,
-        embedder_name=embedder_name,
-        embedder_kwargs=embedder_kwargs,
     )
 
     context_prec = context_precision(

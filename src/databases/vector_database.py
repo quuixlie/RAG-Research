@@ -1,15 +1,23 @@
+from typing import Any
+from pydantic import BaseModel
+from typing import Literal
 from pymilvus import MilvusClient, DataType, CollectionSchema
+import logging
+
+
+class DatabaseKwargs(BaseModel):
+    connection_uri:str = "http://localhost:19530"
+    embedding_dimension: Literal[8, 16, 32, 64, 128, 256, 384, 768, 1536] = 768
 
 
 class VectorDatabase:
-    def __init__(self):
+    def __init__(self,connection_uri = DatabaseKwargs().connection_uri):
         self.client = MilvusClient(
-            uri="http://localhost:19530",
+            uri=connection_uri,
             token="root:Milvus"
         )
 
-
-    def create_collection(self, conversation_d: int, dimension: int) -> None:
+    def create_collection(self, conversation_id: int, dimension: int) -> None:
         """
         This function creates a collection in the vector database. If the collection already exists, it removes it first.
 
@@ -18,11 +26,11 @@ class VectorDatabase:
         :return: None
         """
 
-        collection_name = self.__get_collection_name_by_id(conversation_d)
+        collection_name = self.__get_collection_name_by_id(conversation_id)
 
         # Remove the collection if it already exists
         if self.client.has_collection(collection_name):
-            self.remove_collection(conversation_d)
+            self.remove_collection(conversation_id)
 
         self.client.create_collection(collection_name, dimension, schema=self.__create_schema(dimension))
         self.client.create_index(collection_name, index_params=self.__create_index())
@@ -116,7 +124,7 @@ class VectorDatabase:
         self.client.flush(collection_name)
 
 
-    def search(self, conversation_id: int, query_embedding: list, limit: int = 5):
+    def search(self, conversation_id: int, query_embedding: list, limit: int = 5) -> list[list[dict[Any,Any]]]:
         """
         This function searches for similar data in the vector database.
 
@@ -126,6 +134,11 @@ class VectorDatabase:
         """
 
         collection_name = self.__get_collection_name_by_id(conversation_id)
+
+        if not self.has_collection(conversation_id):
+            logging.error(f"| VectorDatabase::search | Collection with id: {conversation_id} doesn't exist")
+            return []
+
         self.client.load_collection(collection_name)
         search_params = {
             "metric_type": "COSINE",

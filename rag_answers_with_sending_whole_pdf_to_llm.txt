@@ -1,0 +1,330 @@
+{
+  "answers": [
+    {
+      "question": "Where did the narrator crash his plane?",
+      "answer": "The narrator crashed his plane in the Desert of Sahara.",
+      "relevant_contexts": [
+        "So I lived my life alone, without anyone that I could really talk to, until I had an accident with my plane in the Desert of Sahara, six years ago.",
+        "Something was broken in my engine. And as I had with me neither a mechanic nor any passengers, I set myself to attempt the difficult repairs all alone."
+      ]
+    },
+    {
+      "question": "What does the geographer mean by the term \"ephemeral\"?",
+      "answer": "The geographer explains that \"ephemeral\" means \"which is in danger of speedy disappearance.\"",
+      "relevant_contexts": [
+        "\"What does that mean--\"ephemeral\"?\"",
+        "\"It means, \"which is in danger of speedy disappearance.\"\""
+      ]
+    },
+    {
+      "question": "What characters does the Main Character meet on the first six asteroids? In Order.",
+      "answer": "The main character, the Little Prince, meets the following characters on the first six asteroids, in order: 1) A king, 2) A conceited man, 3) A tippler (drunkard), 4) A businessman, 5) A lamplighter, 6) A geographer.",
+      "relevant_contexts": [
+        "The first of them was inhabited by a king. Clad in royal purple and ermine...",
+        "The second planet was inhabited by a conceited man.",
+        "The next planet was inhabited by a tippler.",
+        "The fourth planet belonged to a businessman.",
+        "The fifth planet was very strange. It was the smallest of all. There was just enough room on it for a street lamp and a lamplighter.",
+        "The sixth planet was ten times larger than the last one. It was inhabited by an old gentleman who wrote voluminous books... \"I am a geographer,\" said the old gentleman."
+      ]
+    },
+    {
+      "question": "Why does the little prince insist the sheep must eat the little baobab sprouts?",
+      "answer": "The little prince insists the sheep must eat the little baobab sprouts because if they are left to grow, baobabs can become enormous and their roots can split the small planet apart. It is a matter of discipline to remove them early before they grow too big.",
+      "relevant_contexts": [
+        "Now there were some terrible seeds on the planet that was the home of the little prince; and these were the seeds of the baobab. The soil of that planet was infested with them. A baobab is something you will never, never be able to get rid of if you attend to it too late. It spreads over the entire planet. It bores clear through it with its roots.",
+        "\"It is a question of discipline,\" the little prince said to me later on. \"When you\"ve finished your own toilet in the morning, then it is time to attend to the toilet of your planet, just so, with the greatest care. You must see to it that you pull up regularly all the baobabs, at the very first moment when they can be distinguished from the rosebushes which they resemble so closely in their earliest youth. It is very tedious work,\" the little prince added, \"but very easy.\""
+      ]
+    },
+    {
+      "question": "What can be said about the adults\" priorities from their reactions to the author’s Drawing Number One?",
+      "answer": "The adults’ reactions to Drawing Number One reveal that they prioritize practicality and literal interpretation over imagination and creativity. They fail to see the drawing as a boa constrictor digesting an elephant and instead only see a hat, indicating a lack of understanding and appreciation for a child\"s perspective.",
+      "relevant_contexts": [
+        "I showed my masterpiece to the grown-ups, and asked them whether the drawing frightened them.",
+        "But they answered: \"Frighten? Why should any one be frightened by a hat?\"",
+        "My drawing was not a picture of a hat. It was a picture of a boa constrictor digesting an elephant. But since the grown-ups were not able to understand it, I made another drawing...",
+        "The grown-ups\" response, this time, was to advise me to lay aside my drawings of boa constrictors, whether from the inside or the outside, and devote myself instead to geography, history, arithmetic, and grammar."
+      ]
+    },
+    {
+      "question": "Describe the relationship between the little prince and his rose.",
+      "answer": "The relationship between the little prince and his rose is one of love, misunderstanding, and regret. The little prince cares deeply for the rose and tends to her needs, but is confused and hurt by her vanity and contradictions. Over time, he realizes that despite her difficult behavior, she truly loves him, and he regrets leaving her. Their bond is unique and special, highlighting themes of affection, responsibility, and the pain of growing up.",
+      "relevant_contexts": [
+        "So he tended the flower.",
+        "She began very quickly to torment him with her vanity— which was, if the truth be known, a little difficult to deal with.",
+        "\"I ought not to have listened to her,\" he confided to me one day. \"One never ought to listen to the flowers. One should simply look at them and breathe their fragrance... But I was too young to know how to love her...\"",
+        "\"Of course I love you,\" the flower said to him. \"It is my fault that you have not known it all the while... But you—you have been just as foolish as I. Try to be happy...\"",
+        "\"My flower is ephemeral,\" the little prince said to himself, \"and she has only four thorns to defend herself against the world. And I have left her on my planet, all alone!\""
+      ]
+    },
+    {
+      "question": "Does the little prince originate from asteroid B-612?",
+      "answer": "Yes, the narrator has serious reason to believe that the little prince originates from asteroid B-612.",
+      "relevant_contexts": [
+        "I have serious reason to believe that the planet from which the little prince came is the asteroid known as B-612.",
+        "This asteroid has only once been seen through the telescope. That was by a Turkish astronomer, in 1909."
+      ]
+    },
+    {
+      "question": "Do you think the businessman on the is portrayed as a responsible character?",
+      "answer": "Based on the provided text, there is no mention of a businessman character. Therefore, it\"s impossible to determine if he is portrayed as responsible.",
+      "relevant_contexts": []
+    },
+    {
+      "question": "Do you agree with the narrator’s view that grown-ups lack imagination?",
+      "answer": "The narrator in the text frequently expresses a view that grown-ups lack imagination and have a limited perspective, often focused on facts and figures rather than seeing the deeper meaning or beauty in things. Whether one agrees with this is subjective and depends on their own perspective. However, the text clearly portrays this as a central theme, contrasting the imaginative world of children with the perceived narrow-mindedness of adults.",
+      "relevant_contexts": [
+        "Grown-ups never understand anything by themselves, and it is tiresome for children to be always and forever explaining things to them.",
+        "They are like that. One must not hold it against them. Children must be very patient with grown-ups.",
+        "They will always ask you questions! They never seem to hear what you tell them.",
+        "But, of course, for us who understand life, figures are a matter of complete indifference.",
+        "Grown-ups love figures.",
+        "They would be quite proud to know that they have conquered so many stars!",
+        "But they do not know how to imagine things.",
+        "They ask you: \"How much money do they earn?\"",
+        "They imagine that you are less attractive than your father. They imagine that it has taken you so long to become a thoughtful, reasonable person, like your father.",
+        "I should have judged her according to her actions and not her words. She cast her fragrance and her radiance over me. I ought never to have run away from her... I ought to have guessed that behind her poor little stratagems I ought to have divined the tenderness that they concealed. Flowers are so inconsistent! But I was too young to know how to love her."
+      ]
+    },
+    {
+      "question": "If the little prince had never met his rose, how might his journey and his understanding of relationships differ?",
+      "answer": "If the little prince had never met his rose, his journey and understanding of relationships would likely be significantly different. He wouldn\"t have experienced the complexities of love, attachment, and the pain of potential loss. His travels wouldn\"t be driven by the desire to understand his feelings for the rose, and he might not learn the importance of responsibility and the unique value of his connection to her. Without the rose, his encounters with other characters might not carry the same weight, as the rose serves as a benchmark for his understanding of relationships and what it means to \"tame\" someone.",
+      "relevant_contexts": [
+        "It is the time you have wasted for your rose that makes your rose so important.",
+        "Men have forgotten this truth,\" said the fox. \"But you must not forget it. You become responsible, forever, for what you have tamed.",
+        "To me, you are still nothing more than a little boy who is just like a hundred thousand other little boys. And I have no need of you. And you, on your part, have no need of me. To you, I am nothing more than a fox like a hundred thousand other foxes. But if you tame me, then we shall need each other. To me, you shall be unique in all the world. To you, I shall be unique in all the world.",
+        "I ought to have judged her according to her actions and not her words. She cast her fragrance and her radiance over me. I ought never to have run away from her... I ought to have guessed that behind her poor little stratagems I ought to have divined the tenderness that they concealed. Flowers are so inconsistent! But I was too young to know how to love her."
+      ]
+    },
+    {
+      "question": "Summarize the parable of the baobabs and its moral.",
+      "answer": "The parable of the baobabs in \"The Little Prince\" describes the little prince\"s concern about baobab seeds on his small planet. These seeds, if left unchecked, grow into massive trees that could destroy the planet due to their size and invasive roots. The little prince explains that baobabs must be uprooted when they are small, as they are indistinguishable from rosebushes in their early stages. This requires regular discipline and vigilance to prevent catastrophe. The moral of the parable is that small problems, if ignored, can grow into overwhelming issues, emphasizing the importance of addressing potential dangers early through consistent care and responsibility.",
+      "relevant_contexts": [
+        "It was in this way that I heard, on the third day, about the catastrophe of the baobabs. [...] \"Then it follows that they also eat baobabs?\" I pointed out to the little prince that baobabs were not little bushes, but, on the contrary, trees as big as castles; and that even if he took a whole herd of elephants away with him, the herd would not eat up one single baobab. (PAGE13)",
+        "\"Before they grow so big, the baobabs start out by being little.\" \"That is strictly correct,\" I said. \"But why do you want the sheep to eat the little baobabs?\" He answered me at once, \"Oh, come, come!\", as if he were speaking of something that was self-evident. (PAGE13)",
+        "Now there were some terrible seeds on the planet that was the home of the little prince; and these were the seeds of the baobab. The soil of that planet was infested with them. A baobab is something you will never, never be able to get rid of if you attend to it too late. It spreads over the entire planet. It bores clear through it with its roots. And if the planet is too small, and the baobabs are too many, they split it in pieces ... (PAGE14)",
+        "\"It is a question of discipline,\" the little prince said to me later on. \"When you\"ve finished your own toilet in the morning, then it is time to attend to the toilet of your planet, just so, with the greatest care. You must see to it that you pull up regularly all the baobabs, at the very first moment when they can be distinguished from the rosebushes which they resemble so closely in their earliest youth. It is very tedious work,\" the little prince added, \"but very easy.\" (PAGE14)",
+        "\"Sometimes,\" he added, \"there is no harm in putting off a piece of work until another day. But when it is a matter of baobabs EH, that always means a catastrophe. I knew a planet that was inhabited by a lazy man. He neglected three little bushes ...\" (PAGE14)"
+      ]
+    },
+    {
+      "question": "What color was the little prince’s scarf when he first arrived on Earth?",
+      "answer": "The little prince’s scarf was golden when he first arrived on Earth.",
+      "relevant_contexts": [
+        "I had loosened the golden muffler that he always wore. (PAGE57)"
+      ]
+    },
+    {
+      "question": "Why did he kill the old man?",
+      "answer": "The narrator killed the old man because he was disturbed by the old man\"s vulture-like eye, which caused him intense discomfort and a cold feeling, compelling him to eliminate the eye forever.",
+      "relevant_contexts": [
+        "It is impossible to say how the idea first entered my head. There was no reason for what I did. I did not hate the old man; I even loved him. He had never hurt me. I did not want his money. I think it was his eye. His eye was like the eye of a vulture, the eye of one of those terrible birds that watch and wait while an animal dies, and then fall upon the dead body and pull it to pieces to eat it.",
+        "When the old man looked at me with his vulture eye a cold feeling went up and down my back; even my blood became cold. And so, I finally decided I had to kill the old man and close that eye forever!",
+        "For it was not the old man I felt I had to kill; it was the eye, his Evil Eye."
+      ]
+    },
+    {
+      "question": "Why does he confess to the crime?",
+      "answer": "The narrator confesses to the crime because he is overwhelmed by the persistent sound of the old man\"s heartbeat, which he believes is real and audible to the police, and the psychological torment of their apparent knowledge and smiles drives him to admit his guilt.",
+      "relevant_contexts": [
+        "My head hurt and there was a strange sound in my ears. I talked more, and faster. The sound became clearer. And still they sat and talked.",
+        "Suddenly I knew that the sound was not in my ears, it was not just inside my head. At that moment I must have become quite white. I talked still faster and louder. And the sound, too, became louder. It was a quick, low, soft sound, like the sound of a clock heard through a wall, a sound I knew well.",
+        "No! They heard! I was certain of it. They knew! Now it was they who were playing a game with me. I was suffering more than I could bear, from their smiles, and from that sound. Louder, louder, louder! Suddenly I could bear it no longer. I pointed at the boards and cried, \"Yes! Yes, I killed him. Pull up the boards and you shall see! I killed him. But why does his heart not stop beating?! Why does it not stop!?\""
+      ]
+    },
+    {
+      "question": "Did the narrator want the old man\"s money?",
+      "answer": "No, the narrator did not want the old man\"s money.",
+      "relevant_contexts": [
+        "It is impossible to say how the idea first entered my head. There was no reason for what I did. I did not hate the old man; I even loved him. He had never hurt me. I did not want his money. I think it was his eye."
+      ]
+    },
+    {
+      "question": "What would have happened if the murderer kept calm when the Police arrived?",
+      "answer": "If the narrator had remained calm when the police arrived, it is likely that the police would have believed his story about the old man being away and the cry being his own from a dream, and they would have left without discovering the body, allowing the narrator to escape suspicion temporarily.",
+      "relevant_contexts": [
+        "I asked the policemen to come in. The cry, I said, was my own, in a dream. The old man, I said, was away; he had gone to visit a friend in the country. I took them through the whole house, telling them to search it all, to search well. I led them finally into the old man\"s bedroom. As if playing a game with them I asked them to sit down and talk for a while.",
+        "My easy, quiet manner made the policemen believe my story. So they sat talking with me in a friendly way.",
+        "I was careful not to let a single drop of blood fall on the floor. I pulled up three of the boards that formed the floor, and put the pieces of the body there. Then I put the boards down again, carefully, so carefully that no human eye could see that they had been moved."
+      ]
+    },
+    {
+      "question": "What is Data Science about?",
+      "answer": "Data Science is about solving problems with data, which involves collecting and understanding data, cleaning and formatting it, and using it to create solutions through data analysis or machine learning. It can address scientific, social, or business problems.",
+      "relevant_contexts": [
+        "WHAT IS DATA SCIENCE? ...solving problems with data... scientific, social, or business problem collect & understand data ...sounds cool! What makes a good data scientist? (PAGE2)",
+        "WHAT IS DATA SCIENCE? ...solving problems with data... scientific, social, or business problem collect & understand data clean & format data use data to create solution ...which step is most challenging? use data to create solution data analysis or machine learning (or both) (PAGE3)",
+        "SUMMARY & READING - Data Science is about data, models, and evaluation - Data Science can solve a wide variety of problems once we have the right data and model! (PAGE16)"
+      ]
+    },
+    {
+      "question": "What phases does a machine learning workflow typically include?",
+      "answer": "A machine learning workflow typically includes the training phase, test phase, and evaluation phase.",
+      "relevant_contexts": [
+        "MACHINE LEARNING WORKFLOW - training phase, test phase, evaluation phase data output data model ground truth output performance measure output (PAGE13)"
+      ]
+    },
+    {
+      "question": "What are the examples of using Machine Learning?",
+      "answer": "Examples of using Machine Learning include identifying zip codes from handwritten digits, detecting fraudulent credit card transactions, and determining the location of distribution centers based on customers\" residence.",
+      "relevant_contexts": [
+        "WHAT IS MACHINE LEARNING? ...creating and using models that learn from data... Examples Identifying zip code from handwritten digits Detecting fraudulent credit card transactions Determining the location of distribution centers based on customers\" residence [DSFS] p 3-13 (PAGE7)"
+      ]
+    },
+    {
+      "question": "What can we use to learn from data?",
+      "answer": "To learn from data, we can use regression, classification, and clustering, which are methods associated with supervised learning (predictive modeling) and unsupervised learning (data mining).",
+      "relevant_contexts": [
+        "LEARNING FROM DATA - Regression (PAGE8)",
+        "LEARNING FROM DATA - Classification - Supervised learning (PAGE9)",
+        "LEARNING FROM DATA - Clustering (PAGE10)",
+        "WHAT IS MACHINE LEARNING? regression, classification, clustering ...creating and using models that learn from data... → supervised learning/predictive modelling - come up with predictions - extract knowledge/insights → unsupervised learning/data mining [PDSH] p 332-342 [DSFS] p 141-142 (PAGE11)"
+      ]
+    },
+    {
+      "question": "What are the thermal limits for the board?",
+      "answer": "The conservative thermal limits for the entire Arduino UNO R3 board are from -40°C (-40°F) to 85°C (185°F).",
+      "relevant_contexts": [
+        "| Symbol | Description | Min | Max |\n| :--- | :--- | :--- | :--- |\n|  | Conservative thermal limits for the whole board: | -40°C (-40°F) | 85°C (185°F) |",
+        "NOTE: In extreme temperatures, EEPROM, voltage regulator, and the crystal oscillator, might not work as expected.",
+        "Important: The operating temperature of the EUT can\"t exceed 85°C and shouldn\"t be lower than -40°C."
+      ]
+    },
+    {
+      "question": "What is the definition of \"personal data\" under the GDPR?",
+      "answer": "Under the GDPR, \"personal data\" is defined as any information concerning an identified or identifiable natural person. This includes information that can be attributed to a natural person by the use of additional information, such as pseudonymised data, but excludes anonymous information that does not relate to an identified or identifiable natural person or personal data rendered anonymous such that the data subject is not or no longer identifiable.",
+      "relevant_contexts": [
+        "(26) The principles of data protection should apply to any information concerning an identified or identifiable natural person. Personal data which have undergone pseudonymisation, which could be attributed to a natural person by the use of additional information should be considered to be information on an identifiable natural person. To determine whether a natural person is identifiable, account should be taken of all the means reasonably likely to be used, such as singling out, either by the controller or by another person to identify the natural person directly or indirectly. To ascertain whether means are reasonably likely to be used to identify the natural person, account should be taken of all objective factors, such as the costs of and the amount of time required for identification, taking into consideration the available technology at the time of the processing and technological developments. The principles of data protection should therefore not apply to anonymous information, namely information which does not relate to an identified or identifiable natural person or to personal data rendered anonymous in such a manner that the data subject is not or no longer identifiable. This Regulation does not therefore concern the processing of such anonymous information, including for statistical or research purposes."
+      ]
+    },
+    {
+      "question": "Simply explain what is \"Controller\" under GDPR?",
+      "answer": "Under the GDPR, a \"Controller\" is a natural or legal person, public authority, agency, or other body that, alone or jointly with others, determines the purposes and means of processing personal data.",
+      "relevant_contexts": [
+        "(10) ... Regarding the processing of personal data for compliance with a legal obligation, for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller, Member States should be allowed to maintain the introduction of the public agency.",
+        "(79) ... The controller or processor shall be brought before the courts of the Member State where the controller or processor has an establishment."
+      ]
+    },
+    {
+      "question": "What fine was imposed on Facebook in 2023 for violating the GDPR?",
+      "answer": "In May 2023, Meta Platforms Ireland Limited, the operator of Facebook, was fined €1.2 billion (approximately $1.3 billion) by the Irish Data Protection Commission (DPC) for violating the GDPR. The fine was imposed due to Meta\"s unlawful transfer of personal data of European users to the United States using standard contractual clauses (SCCs), which did not provide adequate safeguards against U.S. surveillance, as ruled by the Court of Justice of the European Union in 2020 (Schrems II decision). Additionally, Meta was ordered to cease unlawful processing, including storage, of EU user data in the U.S. within six months and to suspend data transfers to the U.S. within five months. In January 2023, Meta was also fined €390 million (€210 million for Facebook and €180 million for Instagram) by the DPC for GDPR breaches related to unlawful reliance on \"performance of a contract\" as a legal basis for processing personal data for personalized advertising, violating transparency and consent requirements.",
+      "relevant_contexts": [
+        "(74) The responsibility and liability of the controller for any processing of personal data carried out by the controller or on the controller’s behalf should be established. In particular, the controller should be obliged to implement appropriate and effective measures and be able to demonstrate the compliance of processing activities with this Regulation, including the effectiveness of the measures. Those measures should take into account the nature, scope, context and purposes of the processing and the risk to the rights and freedoms of natural persons.",
+        "(81) To ensure compliance with the requirements of this Regulation in respect of the processing of personal data to be carried out by the processor on behalf of the controller, when entrusting a processor with processing activities, the controller should use only processors providing sufficient guarantees, in particular in terms of expert knowledge, reliability and resources, to implement technical and organisational measures which will meet the requirements of this Regulation, including for the security of processing. The adherence to an approved code of conduct or an approved certification mechanism may be used as an element to demonstrate compliance with the obligations of the controller."
+      ]
+    },
+    {
+      "question": "What does CV stand for?",
+      "answer": "CV stands for Curriculum Vitae.",
+      "relevant_contexts": [
+        "What is a CV?\nCV stands for Curriculum Vitae. Lots of employers still ask for one when you apply for a job."
+      ]
+    },
+    {
+      "question": "What is a speculative letter?",
+      "answer": "A speculative letter is an email or letter sent to an employer who hasn\"t advertised a job, but may have available the type of work you are looking for. It explains why you are interested in working for that employer and outlines the skills and experience you have to offer that are relevant to the type of work you\"re seeking.",
+      "relevant_contexts": [
+        "Speculative letter\nThis is an email or letter to an employer who hasn’t advertised a job, but may have available the type of work you are looking for:\n• Try to address your letter/email to a named person to send it to — often the Personnel or Human Resources Manager, the company manager or the owner\n• State your reason you are writing\n• Explain why you are interested in working for that employer\n• Tell them what skills and experience you have to offer them. These must be relevant to the type of work you are looking for\nMake sure you research the company first before writing. This will help you work out what skills they might be looking for. You can then include these in your speculative letter or email."
+      ]
+    },
+    {
+      "question": "In what order should you list your jobs in the employment section?",
+      "answer": "You should list your jobs in reverse chronological order, starting with the most recent and working backwards.",
+      "relevant_contexts": [
+        "Employment\nIn most cases, you would order your jobs from most recent to oldest. To keep it relevant and save space, you might include only the last 5 or 6 jobs or the last 10 or 15 years’ worth of experience.",
+        "Chronological CV\nYou should list employment and education details in reverse chronological order, most recent to oldest."
+      ]
+    },
+    {
+      "question": "Does Hamlet die at the end?",
+      "answer": "Yes, Hamlet dies at the end of the play.",
+      "relevant_contexts": [
+        "HAMLET\nO, I die, Horatio;\nThe potent poison quite o\"er-crows my spirit:\nI cannot live to hear the news from England;\nBut I do prophesy the election lights\nOn Fortinbras: he has my dying voice;\nSo tell him, with the occurrents, more and less,\nWhich have solicited. The rest is silence.\nDies",
+        "HORATIO\nNow cracks a noble heart. Good night sweet prince:\nAnd flights of angels sing thee to thy rest!"
+      ]
+    },
+    {
+      "question": "Who appears to Hamlet as a ghost?",
+      "answer": "The ghost of Hamlet\"s father, the late King of Denmark, appears to Hamlet.",
+      "relevant_contexts": [
+        "Ghost\nI am thy father\"s spirit,\nDoom\"d for a certain term to walk the night,\nAnd for the day confined to fast in fires,\nTill the foul crimes done in my days of nature\nAre burnt and purged away.",
+        "HORATIO\nMy lord, the king your father.\nHAMLET\nThe king my father!",
+        "HAMLET\nMy father\"s spirit in arms! all is not well;\nI doubt some foul play: would the night were come!"
+      ]
+    },
+    {
+      "question": "What is the meaning hidden behind \"To be or not to be\"?",
+      "answer": "The phrase \"To be or not to be\" from Hamlet\"s soliloquy reflects his contemplation of life and death, questioning whether it is better to exist and endure life\"s hardships or to end one\"s suffering through death. It encapsulates Hamlet\"s existential crisis, weighing the value of living with pain, uncertainty, and moral dilemmas against the unknown nature of death, which he compares to an undiscovered country from which no one returns.",
+      "relevant_contexts": [
+        "HAMLET\nTo be, or not to be: that is the question:\nWhether \"tis nobler in the mind to suffer\nThe slings and arrows of outrageous fortune,\nOr to take arms against a sea of troubles,\nAnd by opposing end them? To die: to sleep;\nNo more; and by a sleep to say we end\nThe heart-ache and the thousand natural shocks\nThat flesh is heir to, \"tis a consummation\nDevoutly to be wish\"d. To die, to sleep;\nTo sleep: perchance to dream: ay, there\"s the rub;\nFor in that sleep of death what dreams may come\nWhen we have shuffled off this mortal coil,\nMust give us pause: there\"s the respect\nThat makes calamity of so long life;",
+        "HAMLET\nWho would fardels bear,\nTo grunt and sweat under a weary life,\nBut that the dread of something after death,\nThe undiscover\"d country from whose bourn\nNo traveller returns, puzzles the will\nAnd makes us rather bear those ills we have\nThan fly to others that we know not of?"
+      ]
+    },
+    {
+      "question": "Why did Jacek Soplica become Father Robak?",
+      "answer": "Jacek Soplica became Father Robak to atone for his past sins, particularly the murder of the Horeszko Pantler, and to serve Poland in secret as a monk, aiding the patriotic cause against Russian oppression. Overwhelmed by guilt and seeking redemption, he joined a monastic order, adopting the identity of Father Robak to hide his past and work covertly to unite Polish nobles and support Napoleon’s campaign to restore Poland’s independence.",
+      "relevant_contexts": [
+        "Father Robak was such a monk. He tried to catch the Judge in private; afterwards, fresh news dispersed throughout the countryside. His bearing, though, was unlike Saint Bernard’s; new to the cowl, he hadn’t grown so old in cloistered halls. A scar above his ear extended to his brow; there was a bold lance-gash upon his chin, and it was clear he wasn’t wounded reading his psalter. His gestures suited life lived in a camp; when serving mass, and turning from the altar, his movement had a military stamp, a right face executed on command. (PAGE29)",
+        "This monk cares less about the intercession of the Saints, preferring politics; and he is known to linger at the station, receiving letters that he quickly sticks inside his hood—dispatching messengers. At night he often sneaks out in the dark to nearby manor houses, where he whispers. Peasants drinking in taverns remark about his talk. The Judge will not refuse to let him in—surely he has some news. (PAGE29)",
+        "And then one day a wandering monk appeared collecting alms. When he was satisfied the manor harbored no one to be feared, he removed papers that he’d sewn inside his scapular—coveted information, number of troops, the name of every legion commander, then victorious description, or else obituary. After uncertain years, a family might gain news of the glory or death of sons. (PAGE28)"
+      ]
+    },
+    {
+      "question": "During which historical period does the story of Pan Tadeusz take place?",
+      "answer": "The story of Pan Tadeusz takes place during the Partition of Poland, specifically over several days in 1811 and one day in 1812, when Poland had been divided between Russia, Austria, and Prussia and had disappeared from the political map of Europe.",
+      "relevant_contexts": [
+        "The story of Pan Tadeusz takes place over several days in 1811 and one day in 1812, during the Paritition of Poland. Poland, at the time, had been divided up between Russia, Austria, and Prussia, and had literally disappeared from the political map of Europe. The specific events of Pan Tadeusz take place in the village of Soplicowo in Lithuania. (PAGE2)",
+        "In 1811 many Poles believed Napoleon to be unconquerable, and eagerly awaited the outcome of his Russian campaign. (PAGE261)"
+      ]
+    },
+    {
+      "question": "What is the most dangerous species of a spider?",
+      "answer": "The book Pan Tadeusz does not provide specific information about the most dangerous species of spider.",
+      "relevant_contexts": []
+    },
+    {
+      "question": "Which instruments are used in this song?",
+      "answer": "The document does not provide specific information about the instruments used in the song \"Shape of My Heart\" by Sting.",
+      "relevant_contexts": []
+    },
+    {
+      "question": "Is the narrator playing cards for money?",
+      "answer": "No, the narrator is not playing cards for money. The text explicitly states that he doesn\"t play for the money he wins.",
+      "relevant_contexts": [
+        "He doesn\"t play for the money he wins",
+        "On nie gra dla pieniedzy i sławy"
+      ]
+    },
+    {
+      "question": "How does the poet describe the daffodils?",
+      "answer": "The poet describes the daffodils as a vibrant and joyful \"crowd\" and \"host\" of \"golden daffodils\" stretching in a \"never-ending line\" along the margin of a bay, beside a lake and beneath trees. They are depicted as \"fluttering and dancing in the breeze,\" with their movement likened to a \"sprightly dance,\" surpassing the \"sparkling waves\" in glee. Their vast number and radiance are compared to \"the stars that shine and twinkle on the milky way,\" conveying a sense of lively motion, unity, and exuberant beauty.",
+      "relevant_contexts": [
+        "I wandered lonely as a cloud That floats on high o\"er vales and hills, When all at once I saw a crowd, A host, of golden daffodils; Beside the lake, beneath the trees, Fluttering and dancing in the breeze.",
+        "Continuous as the stars that shine And twinkle on the milky way, They stretched in never-ending line Along the margin of a bay: Ten thousand saw I at a glance, Tossing their heads in sprightly dance.",
+        "The waves beside them danced; but they Out-did the sparkling waves in glee: A poet could not but be gay, In such a jocund company:"
+      ]
+    },
+    {
+      "question": "What does the \"inward eye\" represent in the poem?",
+      "answer": "In the poem, the \"inward eye\" represents the poet\"s imagination or memory, which allows him to vividly recall the scene of the daffodils when he is in a \"vacant or pensive mood.\" This mental vision brings him joy and comfort, filling his heart with pleasure and connecting him to the beauty of nature even in solitude.",
+      "relevant_contexts": [
+        "For oft, when on my couch I lie In vacant or in pensive mood, They flash upon that inward eye Which is the bliss of solitude; And then my heart with pleasure fills, And dances with the daffodils."
+      ]
+    },
+    {
+      "question": "How does cancer usually develop in the body?",
+      "answer": "Cancer usually develops in the body when cells grow and divide uncontrollably due to genetic mutations, forming a tumor or spreading to other areas. These mutations can be triggered by factors like DNA damage, inherited genetic changes, or environmental exposures such as smoking or UV radiation. Over time, cancer cells may invade nearby tissues or metastasize to distant parts of the body through the bloodstream or lymphatic system.",
+      "relevant_contexts": [
+        "Cancer is a disease caused by the uncontrolled growth and spread of abnormal cells in the body. It begins when the normal process of cell growth and division is disrupted, often due to genetic mutations.",
+        "These mutations can result from various factors, including environmental exposures (e.g., tobacco, UV radiation, or chemicals), inherited genetic alterations, or random errors during DNA replication.",
+        "As cancer progresses, malignant cells may invade nearby tissues or spread (metastasize) to other parts of the body through the blood or lymphatic system, forming secondary tumors."
+      ]
+    },
+    {
+      "question": "What is the role of Adam Kowalski mentioned in text?",
+      "answer": "The text does not explicitly mention an individual named Adam Kowalski or their specific role in relation to cancer development. Therefore, no role for Adam Kowalski is identified in the provided context about how cancer usually develops in the body.",
+      "relevant_contexts": []
+    }
+  ]
+}
+

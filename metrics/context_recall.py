@@ -1,18 +1,15 @@
 from typing import List
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from source.embedders.embedder_factory import EmbedderFactory
+from langchain_core.embeddings.embeddings import Embeddings
 
 
 def context_recall(
     relevant_contexts: List[str], 
     rag_contexts: List[str], 
+    embedder: Embeddings,
     similarity_threshold: float = 0.8,
-    embedder_name: str = "basic-embedder",
-    embedder_kwargs: dict = {
-        "sentence_transformer_name": "mixedbread-ai/mxbai-embed-large-v1",
-        "device": "cpu", 
-    }
+    
 ) -> float:
     """
     Evaluate context recall: the proportion of relevant contexts for which
@@ -35,12 +32,12 @@ def context_recall(
         print("No RAG contexts provided.")
         return 0.0
 
-    # GPU memory limit pass
-    embedder = EmbedderFactory(embedder_name, **embedder_kwargs)
+    # # GPU memory limit pass
+    # embedder = EmbedderFactory(embedder_name, **embedder_kwargs)
 
     try:
-        relevant_embeddings = np.array(embedder.encode(relevant_contexts))
-        rag_embeddings = np.array(embedder.encode(rag_contexts))
+        relevant_embeddings = np.array(embedder.embed_documents(relevant_contexts))
+        rag_embeddings = np.array(embedder.embed_documents(rag_contexts))
     except Exception as e:
         print(f"Error generating embeddings: {e}")
         return 0.0

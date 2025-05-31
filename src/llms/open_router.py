@@ -1,8 +1,9 @@
-from .__llm_template import LLMTemplate
+from .llm import LLM
 from openai import OpenAI, AsyncOpenAI
+from typing import Optional
 
 
-class OpenRouter(LLMTemplate):
+class OpenRouter(LLM):
     """
     OpenRouter class for generating text using the OpenRouter API (it uses OpenAI API SDK).
     It uses the OpenRouter API to generate text based on the provided prompt.
@@ -12,13 +13,12 @@ class OpenRouter(LLMTemplate):
     :param api_key: API key for the OpenAI API
     """
 
-    def __init__(self, llm_name: str, initial_prompt: str, api_key: str, model_name: str) -> None:
+    def __init__(self, llm_name: str, api_key: str, model_name: str, initial_prompt:Optional[str]) -> None:
         super().__init__(llm_name)
         self.initial_prompt = initial_prompt
         self.client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
         self.async_client = AsyncOpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
-        self.model = model_name
-
+        self.model_name = model_name
 
     def generate(self, prompt: str) -> str:
         """
@@ -30,7 +30,7 @@ class OpenRouter(LLMTemplate):
 
         # Generate a response using the OpenRouter API
         response = self.client.chat.completions.create(
-            model=self.model,
+            model=self.model_name,
             messages= [
                 {
                     "role": "system",
@@ -62,7 +62,7 @@ class OpenRouter(LLMTemplate):
 
         # Generate a response using the OpenRouter API
         response = await self.async_client.chat.completions.create(
-            model=self.model,
+            model=self.model_name,
             messages= [
                 {
                     "role": "system",
@@ -74,7 +74,6 @@ class OpenRouter(LLMTemplate):
                 }
             ]
         )
-
         # Check if any error occurred
         if hasattr(response, "error") and response.error:
             response = response.error
