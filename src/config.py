@@ -1,42 +1,61 @@
+import dataclasses
 import os
 from pydantic import BaseModel
+from .cross_encoders.cross_encoder import CrossEncoder,BasicCrossEncoder
+from .llms.llm import LLM, BielikLLM
+from .embedders.embedder import Embedder, LocalEmbedder
+from .rag_architectures.rag_architecture_factory import RAGArchitectureName
+from .text_splitters.text_splitter import TextSplitterName,TextSplitterKwargs
+from .rag_architectures.rag_architecture_factory import RAGArchitectureName
+from .databases.vector_database import DatabaseKwargs
 
-from src.cross_encoders.cross_encoder_factory import CrossEncoderKwargs, CrossEncoderName
-from src.embedders.embedders import EmbedderName, EmbedderKwargs
-from src.llms.llm_factory import LLMKwargs, LLMType
-from src.rag_architectures.rag_architecture_factory import RAGArchitectureName
-from src.text_splitters.text_splitter import TextSplitterName,TextSplitterKwargs
-from src.rag_architectures.rag_architecture_factory import RAGArchitectureName
-from src.databases.vector_database import DatabaseKwargs
 
+@dataclasses.dataclass
+class Config:
 
-class Config(BaseModel):
-    database_kwargs: DatabaseKwargs = DatabaseKwargs()
-    rag_architecture_name: RAGArchitectureName = "classic-rag"
+    embedder:Embedder
+    llm:LLM
+    evaluation_llm:LLM
+    database_kwargs: DatabaseKwargs 
+    rag_architecture_name: RAGArchitectureName 
+    cross_encoder:CrossEncoder 
+    text_splitter_name: TextSplitterName
+    text_splitter_kwargs: TextSplitterKwargs 
 
-    embedder_name: EmbedderName = "sentence-transformers/all-mpnet-base-v2"
-    embedder_kwargs: EmbedderKwargs = EmbedderKwargs()
-
-    cross_encoder_name: CrossEncoderName = "cross-encoder/ms-marco-MiniLM-L-6-v2"
-    cross_encoder_kwargs: CrossEncoderKwargs = CrossEncoderKwargs()
-
-    text_splitter_name: TextSplitterName = "character-tiktoken"
-    text_splitter_kwargs: TextSplitterKwargs = TextSplitterKwargs()
-
-    llm_type: LLMType = "open-router"
-    llm_kwargs: LLMKwargs = LLMKwargs()
-
-    evaluation_llm_name: LLMType = "open-router"
-    evaluation_kwargs: LLMKwargs = LLMKwargs()
 
     """
     Configuration base class for RAG (Retrieval-Augmented Generation).
     """
 
 default_config = Config(
-
-    llm_kwargs=LLMKwargs(
-        api_key=os.getenv("OPENROUTER_API_KEY")
+    embedder = LocalEmbedder(
+        model_name='all-MiniLM-L6-v2',
+        device='cpu'
+    ),
+    llm=BielikLLM(
+        api_url=os.getenv("PG_API_URL"),
+        llm_username=os.getenv("PG_LLM_USERNAME"),
+        llm_password=os.getenv("PG_LLM_PASSWORD"),
+        temperature=0.0,
+        initial_prompt="You are a helpful assistant"
+    ),
+    evaluation_llm=BielikLLM(
+        api_url=os.getenv("PG_API_URL"),
+        llm_username=os.getenv("PG_LLM_USERNAME"),
+        llm_password=os.getenv("PG_LLM_PASSWORD"),
+        temperature=0.0,
+        initial_prompt="You are a helpful assistant"
+    ),
+    database_kwargs= DatabaseKwargs(
+    embedding_dimension=384
+    ),
+    rag_architecture_name= "classic-rag",
+    text_splitter_name= "character-tiktoken",
+    text_splitter_kwargs= TextSplitterKwargs(),
+    cross_encoder= BasicCrossEncoder(
+        cross_encoder_name="dada",
+        sentence_transformer_name="cross-encoder/ms-marco-MiniLM-L-6-v2",
+        device="cpu"
     )
 
 )

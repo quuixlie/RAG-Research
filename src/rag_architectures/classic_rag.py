@@ -1,12 +1,9 @@
-from src.cross_encoders.cross_encoder_factory import cross_encoder_factory
 from ..databases.vector_database import VectorDatabase
 from .__rag_architecture import RAGArchitecture
 from ..utils.document_parser import parse_to_markdown
 from ..utils.prompt_builder import create_prompt
-from ..llms.llm_factory import llm_factory
-from ..embedders.embedders import embedder_factory
+from ..embedders.embedder import Embedder
 from ..text_splitters.text_splitter import text_splitter_factory
-# from ..cross_encoders.cross_encoder_factory import CrossEncoderFactory
 from pymupdf import Document
 
 
@@ -29,10 +26,10 @@ class ClassicRAG(RAGArchitecture):
     def __init__(self, rag_architecture_name: str, config: 'Config') -> None:
         super().__init__(rag_architecture_name)
         self.config = config
-        self.embedder = embedder_factory(config.embedder_name,config.embedder_kwargs)
+        self.embedder:Embedder = config.embedder
         self.text_splitter = text_splitter_factory(config.text_splitter_name,config.text_splitter_kwargs)
-        self.cross_encoder = cross_encoder_factory(config.cross_encoder_name,config.cross_encoder_kwargs)
-        self.llm = llm_factory(self.config.llm_type, config.llm_kwargs)
+        self.cross_encoder = config.cross_encoder
+        self.llm = config.llm
         self.vector_database = VectorDatabase()
 
 
@@ -123,7 +120,7 @@ class ClassicRAG(RAGArchitecture):
         fragments = self.text_splitter.split_text(document)
 
         # Vectorize the fragments
-        embeddings = self.embedder.embed_documents(fragments)
+        embeddings = self.embedder.embed_fragments(fragments)
 
         # Create a list of dictionaries with text and embedding
         embeddings_with_text_pairs = [
@@ -158,7 +155,7 @@ class ClassicRAG(RAGArchitecture):
         """
 
         # Embedding
-        query_embedding = self.embedder.embed_query(query)
+        query_embedding = self.embedder.embed(query)
 
         # Search the vector database
         results = self.vector_database.search(conversation_id, [query_embedding], limit=20)

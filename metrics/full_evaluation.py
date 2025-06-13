@@ -1,6 +1,4 @@
 from src.config import Config
-from src.llms.llm_factory import llm_factory
-from src.embedders.embedders import embedder_factory
 from metrics.answer_relevancy import answer_relevancy
 from metrics.context_precision import context_precision
 from metrics.context_recall import context_recall
@@ -34,8 +32,8 @@ def full_evaluate(
     """
 
     # Create the LLM
-    llm = llm_factory(config.llm_type,config.llm_kwargs)
-    embedder = embedder_factory(config.embedder_name,config.embedder_kwargs)
+    llm = config.llm
+    embedder = config.embedder
 
     accuracy =  answer_relevancy(
         question=question,

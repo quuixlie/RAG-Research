@@ -3,8 +3,6 @@ from ..databases.vector_database import VectorDatabase
 from .__rag_architecture import RAGArchitecture
 from ..utils.document_parser import parse_to_markdown
 from ..utils.prompt_builder import create_prompt
-from ..llms.llm_factory import llm_factory
-from ..embedders.embedders import embedder_factory
 from ..text_splitters.text_splitter import text_splitter_factory
 
 
@@ -27,9 +25,9 @@ class BrainRAG(RAGArchitecture):
     def __init__(self, rag_architecture_name: str, config: 'Config') -> None:
         super().__init__(rag_architecture_name)
         self.config = config
-        self.embedder = embedder_factory(config.embedder_name,config.embedder_kwargs)
+        self.embedder = config.embedder
         self.text_splitter = text_splitter_factory(config.text_splitter_name,config.text_splitter_kwargs)
-        self.llm = llm_factory(config.llm_type,**config.llm_kwargs.model_dump())
+        self.llm = config.llm
         self.vector_database = VectorDatabase()
 
 
@@ -124,7 +122,7 @@ class BrainRAG(RAGArchitecture):
         for fragment in fragments:
             questions = self.get_questions_to_fragment(fragment)
             questions += f" {fragment}"
-            embedding = self.embedder.embed_query(questions)
+            embedding = self.embedder.embed(questions)
             embeddings_with_text_pairs.append({
                 "text": fragment,
                 "embedding": embedding[0]
@@ -155,7 +153,7 @@ class BrainRAG(RAGArchitecture):
         """
 
         # Embedding
-        query_embedding = self.embedder.embed_query(query)
+        query_embedding = self.embedder.embed(query)
 
         # Search the vector database
         results = self.vector_database.search(conversation_id, query_embedding, limit=20)

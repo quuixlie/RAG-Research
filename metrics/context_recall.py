@@ -1,13 +1,13 @@
 from typing import List
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from langchain_core.embeddings.embeddings import Embeddings
+from src.embedders.embedder import Embedder
 
 
 def context_recall(
     relevant_contexts: List[str], 
     rag_contexts: List[str], 
-    embedder: Embeddings,
+    embedder: Embedder,
     similarity_threshold: float = 0.8,
     
 ) -> float:
@@ -36,8 +36,8 @@ def context_recall(
     # embedder = EmbedderFactory(embedder_name, **embedder_kwargs)
 
     try:
-        relevant_embeddings = np.array(embedder.embed_documents(relevant_contexts))
-        rag_embeddings = np.array(embedder.embed_documents(rag_contexts))
+        relevant_embeddings = np.array(embedder.embed_fragments(relevant_contexts))
+        rag_embeddings = np.array(embedder.embed_fragments(rag_contexts))
     except Exception as e:
         print(f"Error generating embeddings: {e}")
         return 0.0
