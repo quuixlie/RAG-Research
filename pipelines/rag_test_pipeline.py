@@ -1,4 +1,4 @@
-from src.rag_architectures.rag_architecture_factory import rag_architecture_factory
+from src.architectures.rag_architecture_factory import rag_architecture_factory
 from src.config import Config
 from pymupdf import Document
 

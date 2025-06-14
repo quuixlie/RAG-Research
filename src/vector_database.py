@@ -1,13 +1,13 @@
 from typing import Any
 from pydantic import BaseModel
-from typing import Literal
 from pymilvus import MilvusClient, DataType, CollectionSchema
 import logging
 
+from .embedder import EmbeddingSize
 
 class DatabaseKwargs(BaseModel):
     connection_uri:str = "http://localhost:19530"
-    embedding_dimension: Literal[8, 16, 32, 64, 128, 256, 384, 768, 1536] = 768
+    embedding_dimension: EmbeddingSize = 768
 
 
 class VectorDatabase:

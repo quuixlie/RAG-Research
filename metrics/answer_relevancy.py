@@ -1,4 +1,4 @@
-from src.llms.llm import LLM
+from src.llm import LLM
 
 
 

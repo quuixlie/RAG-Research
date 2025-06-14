@@ -1,7 +1,7 @@
 from typing import List
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from src.embedders.embedder import Embedder
+from src.embedder import Embedder
 
 
 def context_recall(

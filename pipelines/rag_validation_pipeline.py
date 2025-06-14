@@ -1,6 +1,6 @@
 from metrics.full_evaluation import full_evaluate
 from src.config import Config
-from src.rag_architectures.rag_architecture_factory import rag_architecture_factory
+from src.architectures.rag_architecture_factory import rag_architecture_factory
 from metrics.dataset_template import DatasetEntry
 from pymupdf import Document
 

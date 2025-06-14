@@ -3,7 +3,7 @@ from typing import Literal,get_args, override,cast
 import openai
 from sentence_transformers import SentenceTransformer
 
-EmbeddingSize = Literal[8,16,32,64,128,256,384,768,1528]
+EmbeddingSize = Literal[8,16,32,64,128,256,384,768,1536]
 
 
 class Embedder(ABC):

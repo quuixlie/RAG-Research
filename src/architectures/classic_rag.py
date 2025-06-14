@@ -1,9 +1,8 @@
-from pymupdf import Document
-from ..databases.vector_database import VectorDatabase
+from ..vector_database import VectorDatabase
 from .__rag_architecture import RAGArchitecture
 from ..utils.document_parser import parse_to_markdown
 from ..utils.prompt_builder import create_prompt
-from ..text_splitters.text_splitter import text_splitter_factory
+from pymupdf import Document
 
 
 # Avoid ciruclar import
@@ -11,12 +10,12 @@ import typing
 if typing.TYPE_CHECKING:
     from ..config import Config
 
-class BrainRAG(RAGArchitecture):
+
+class ClassicRAG(RAGArchitecture):
     """
-    Brain RAG architecture for generating answers based on a given question and context.
-    This class is a classic implementation of the RAG architecture, which combines a retriever and a generator and
-    uses a cross-encoder to rerank the retrieved documents. But to each fragment it generates a list of questions
-    then splits it and vectorizes it.
+    Classic RAG architecture for generating answers based on a given question and context.
+    This class is a classic implementation of the RAG architecture, which combines a retriever and a generator.
+    It uses a retriever to find relevant documents and a generator to generate answers based on the retrieved documents.
 
     :param rag_architecture_name: Name of the RAG architecture
     :param config: Configuration object containing RAG settings
@@ -26,7 +25,8 @@ class BrainRAG(RAGArchitecture):
         super().__init__(rag_architecture_name)
         self.config = config
         self.embedder = config.embedder
-        self.text_splitter = text_splitter_factory(config.text_splitter_name,config.text_splitter_kwargs)
+        self.tokenizer = config.tokenizer
+        self.cross_encoder = config.cross_encoder
         self.llm = config.llm
         self.vector_database = VectorDatabase()
 
@@ -90,7 +90,7 @@ class BrainRAG(RAGArchitecture):
 
         # Create a collection for the conversation if it doesn't exist
         if not self.vector_database.has_collection(conversation_id):
-            dim = self.config.database_kwargs["embedding_dimension"]
+            dim = self.config.database_kwargs.embedding_dimension
             self.vector_database.create_collection(conversation_id, dimension=dim)
 
 
@@ -113,20 +113,20 @@ class BrainRAG(RAGArchitecture):
         :param document: Document to be embedded
         :return: List of document fragments
         """
-        embeddings_with_text_pairs = []
 
         # Split the document into fragments
-        fragments = self.text_splitter.split_text(document)
+        fragments = self.tokenizer.tokenize(document)
 
-        # Prepare fragments, questions pairs
-        for fragment in fragments:
-            questions = self.get_questions_to_fragment(fragment)
-            questions += f" {fragment}"
-            embedding = self.embedder.embed(questions)
-            embeddings_with_text_pairs.append({
+        # Vectorize the fragments
+        embeddings = self.embedder.embed_fragments(fragments)
+
+        # Create a list of dictionaries with text and embedding
+        embeddings_with_text_pairs = [
+            {
                 "text": fragment,
-                "embedding": embedding[0]
-            })
+                "embedding": embedding,
+            } for fragment, embedding in zip(fragments, embeddings)
+        ]
 
         return embeddings_with_text_pairs
 
@@ -156,7 +156,7 @@ class BrainRAG(RAGArchitecture):
         query_embedding = self.embedder.embed(query)
 
         # Search the vector database
-        results = self.vector_database.search(conversation_id, query_embedding, limit=20)
+        results = self.vector_database.search(conversation_id, [query_embedding], limit=20)
 
         # Create a list of relevant documents (text only)
         result = []
@@ -165,10 +165,11 @@ class BrainRAG(RAGArchitecture):
 
         # Rerank the documents using a cross-encoder
         reranked_documents = self.rerank(query, result, top_k=4)
+
         return reranked_documents
     
 
-    def rerank(self, query: str, documents: list, top_k: int = 2) -> list:
+    def rerank(self, query: str, documents: list, top_k: int = 5) -> list:
             """
             Rerank the documents based on the query using a cross-encoder.
 
@@ -181,41 +182,11 @@ class BrainRAG(RAGArchitecture):
             # Create pairs of query and documents
             query_document_pairs = [(query, doc) for doc in documents]
 
-            # Create a cross-encoder
-            cross_encoder = CrossEncoderFactory(self.config.cross_encoder_name, **self.config.cross_encoder_kwargs)
-
             # Calculate scores for each pair
-            scores = cross_encoder.compare(query_document_pairs)
+            scores = self.cross_encoder.compare(query_document_pairs)
 
             # Sort the documents based on the scores (higher is better)
             sorted_documents = sorted(zip(documents, scores), key=lambda x: x[1], reverse=True)
 
             # Return the top_k documents
-            return [doc for doc, score in sorted_documents[:top_k]]
-    
-
-    def get_questions_to_fragment(self, fragment: str) -> str:
-        """
-        Get the questions to fragment.
-
-        :param fragment: Fragment to be processed
-        :return: Questions to fragment
-        """
-        
-        prompt = f"""
-            Based on the following text, generate a list of questions that a reader might ask to better understand, analyze, or remember the content. 
-            Include factual questions (who, what, when, where, why, how), comprehension questions, and interpretive questions. Do not answer the questions — only list them.
-
-            Text:
-            {fragment}
-
-            Expected output format:
-                - Question 1
-                - Question 2
-                - Question 3
-                ..."""
-        
-        # Generate the questions using the LLM
-        questions = self.llm.generate(prompt)
-
-        return questions
+            return [doc for doc, _ in sorted_documents[:top_k]]
