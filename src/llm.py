@@ -1,7 +1,8 @@
-import json
 from abc import ABC, abstractmethod
 import httpx
-from typing import Literal,get_args,override,Union
+from typing import Literal,get_args,override,Union,Optional,Any
+import langchain_core.language_models as langchainllm
+from langchain_core.callbacks.manager import CallbackManagerForLLMRun,AsyncCallbackManagerForLLMRun
 import openai
 
 def get_args_recursive(t) -> list:
@@ -36,7 +37,7 @@ class LLM(ABC):
     def __init__(self, 
                  model_name: LLMModelName,
                  temperature:float,
-                 initial_prompt:str,
+                 system_prompt:str | None,
                  ):
 
         if temperature > 1 or temperature < 0:
@@ -47,7 +48,7 @@ class LLM(ABC):
 
         self.model_name: LLMModelName = model_name
         self.temperature:float = temperature
-        self.initial_prompt:str = initial_prompt
+        self.system_prompt:str | None = system_prompt
 
     @abstractmethod
     def generate(self, prompt: str) -> str:
@@ -70,6 +71,19 @@ class LLM(ABC):
         """
         pass
 
+class LangchainLLMWrapper(langchainllm.LLM):
+    llm:LLM
+
+    def _call(self, prompt: str, stop: Optional[list[str]] = None, run_manager: Optional[CallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
+        return self.llm.generate(prompt)
+
+    async def _acall(self, prompt: str, stop: Optional[list[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
+        return await self.llm.a_generate(prompt)
+
+    @property
+    def _llm_type(self) -> str:
+        return str(type(self.llm))
+
 class BielikLLM(LLM):
 
     def __init__(self,
@@ -77,7 +91,7 @@ class BielikLLM(LLM):
                  llm_username:str,
                  llm_password:str,
                  temperature:float = 0.0,
-                 initial_prompt:str = ""
+                 system_prompt:str | None = None 
                  ):
         """
         LLM hosted at Gdansk University of Technology
@@ -91,23 +105,20 @@ class BielikLLM(LLM):
         """
 
 
-        super().__init__("speakleash/Bielik-11B-v2.2-Instruct",temperature,initial_prompt)
+        super().__init__("speakleash/Bielik-11B-v2.2-Instruct",temperature,system_prompt)
 
         self.api_url = api_url
         self.llm_username:str = llm_username
         self.llm_password:str = llm_password
 
-        self.temperature:float = temperature
-        self.initial_prompt:str = initial_prompt
-
     @override
     def generate(self, prompt: str) -> str:
         data = {
             "messages": [
-                {"role": "system", "content": self.initial_prompt},
+                {"role": "system", "content": self.system_prompt},
                 {"role": "user", "content": prompt}
             ],
-            # "max_length": 16,  # adjust as needed
+            "max_length": 2048,  # adjust as needed
             "temperature": self.temperature
         }
 
@@ -134,10 +145,10 @@ class BielikLLM(LLM):
     async def a_generate(self, prompt: str) -> str:
         data = {
             "messages": [
-                {"role": "system", "content": self.initial_prompt},
+                {"role": "system", "content": self.system_prompt},
                 {"role": "user", "content": prompt}
             ],
-            # "max_length": 16,  # adjust as needed
+            "max_length": 2048,  # adjust as needed
             "temperature": self.temperature
         }
 
@@ -167,9 +178,9 @@ class OpenRouterLLM(LLM):
                  api_key:str,
                  model_name:OpenRouterModelName = "deepseek/deepseek-r1-0528-qwen3-8b:free",
                  temperature:float = 0.0,
-                 initial_prompt:str = ""
+                 system_prompt:str | None = None
                  ):
-        super().__init__(model_name,temperature,initial_prompt)
+        super().__init__(model_name,temperature,system_prompt)
 
         if model_name not in get_args(OpenRouterModelName):
             raise Exception(f"Invalid openai llm model name: {model_name} (possibel values are: {get_args(OpenRouterModelName)})")
@@ -182,7 +193,7 @@ class OpenRouterLLM(LLM):
             "model":self.model_name,
             "temperature": self.temperature,
             "messages": [
-                {"role": "system", "content": self.initial_prompt},
+                {"role": "system", "content": self.system_prompt},
                 {"role": "user", "content": prompt}
             ],
         }
@@ -209,7 +220,7 @@ class OpenRouterLLM(LLM):
             "model":self.model_name,
             "temperature": self.temperature,
             "messages": [
-                {"role": "system", "content": self.initial_prompt},
+                {"role": "system", "content": self.system_prompt},
                 {"role": "user", "content": prompt}
             ],
         }
@@ -239,9 +250,9 @@ class OpenAILLM(LLM):
                  api_key:str,
                  model_name: OpenAIModelName= 'gpt-3.5-turbo',
                  temperature:float = 0.0,
-                 initial_prompt:str = ""
+                 system_prompt:str = ""
                  ):
-        super().__init__(model_name,temperature,initial_prompt)
+        super().__init__(model_name,temperature,system_prompt)
 
         if model_name not in get_args(OpenAIModelName):
             raise Exception(f"Invalid openai llm model name: {model_name} (possibel values are: {get_args(OpenAIModelName)})")
@@ -254,7 +265,7 @@ class OpenAILLM(LLM):
 
         response = self.client.chat.completions.create(
             messages=[
-                {"role":"system","content":self.initial_prompt},
+                {"role":"system","content":self.system_prompt},
                 {"role":"user","content":prompt}
             ],
             model = self.model_name,
@@ -272,7 +283,7 @@ class OpenAILLM(LLM):
 
         response = await self.client_async.chat.completions.create(
             messages=[
-                {"role":"system","content":self.initial_prompt},
+                {"role":"system","content":self.system_prompt},
                 {"role":"user","content":prompt}
             ],
             model = self.model_name,
@@ -286,39 +297,34 @@ class OpenAILLM(LLM):
         return model_response
 
 if __name__ == "__main__":
-    import os
+    #ollm = OpenAILLM(
+    #    api_key=os.getenv("OPENAI_API_KEY"),
+    #    model_name="gpt-3.5-turbo",
+    #    system_prompt="You are a helpful assistant",
+    #    temperature=0.0
+    #)
+    #openai_respnse = ollm.generate("Ile to 2 + 2 * 2")
+    #print("OpenAI response:",openai_respnse)
 
-
-    ollm = OpenAILLM(
-        api_key=os.getenv("OPENAI_API_KEY"),
-        model_name="gpt-3.5-turbo",
-        initial_prompt="You are a helpful assistant",
-        temperature=0.0
-    )
-
-    openrouter = OpenRouterLLM(
-        api_key=os.getenv("OPENROUTER_API_KEY"),
-        model_name='deepseek/deepseek-r1-0528-qwen3-8b:free',
-        initial_prompt="You are a helpful assistant",
-        temperature=0.0
-    )
+    #openrouter = OpenRouterLLM(
+    #    api_key=os.getenv("OPENROUTER_API_KEY"),
+    #    model_name='deepseek/deepseek-r1-0528-qwen3-8b:free',
+    #    system_prompt="You are a helpful assistant",
+    #    temperature=0.0
+    #)
+    #openrouter_response = openrouter.generate("Ile to 2 + 2 * 2")
+    #print("OPENROUTER response:",openrouter_response)
 
     bielik = BielikLLM(
-        api_url=os.getenv("PG_API_URL"),
+        api_url=os.getenv("PG_LLM_URL"),
         llm_username=os.getenv("PG_LLM_USERNAME"),
         llm_password=os.getenv("PG_LLM_PASSWORD"),
         temperature=0.0,
-        initial_prompt="You are a helpful assistant"
+        system_prompt="You are a helpful assistant"
     )
-
-    openai_respnse = ollm.generate("Ile to 2 + 2 * 2")
-    print("OpenAI response:",openai_respnse)
-
     bielik_response = bielik.generate("Ile to 2 + 2 * 2")
     print("Bielik response:",bielik_response)
 
-    openrouter_response = openrouter.generate("Ile to 2 + 2 * 2")
-    print("OPENROUTER response:",openrouter_response)
 
 
 

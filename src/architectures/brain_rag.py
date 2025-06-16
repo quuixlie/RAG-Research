@@ -1,8 +1,8 @@
 from pymupdf import Document
-from ..vector_database import VectorDatabase
-from .__rag_architecture import RAGArchitecture
-from ..utils.document_parser import parse_to_markdown
-from ..utils.prompt_builder import create_prompt
+from src.database import VectorDatabase
+from src.architectures.__rag_architecture import RAGArchitecture
+from src.utils.document_parser import parse_to_markdown
+from src.utils.prompt_builder import create_prompt
 
 
 # Avoid ciruclar import

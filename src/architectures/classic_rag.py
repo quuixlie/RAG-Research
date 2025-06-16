@@ -1,4 +1,4 @@
-from ..vector_database import VectorDatabase
+from ..database import VectorDatabase
 from .__rag_architecture import RAGArchitecture
 from ..utils.document_parser import parse_to_markdown
 from ..utils.prompt_builder import create_prompt
@@ -21,7 +21,7 @@ class ClassicRAG(RAGArchitecture):
     :param config: Configuration object containing RAG settings
     """
 
-    def __init__(self, rag_architecture_name: str, config: 'Config') -> None:
+    def __init__(self, rag_architecture_name: str, config: 'Config'):
         super().__init__(rag_architecture_name)
         self.config = config
         self.embedder = config.embedder
@@ -29,7 +29,6 @@ class ClassicRAG(RAGArchitecture):
         self.cross_encoder = config.cross_encoder
         self.llm = config.llm
         self.vector_database = VectorDatabase()
-
 
     def process_document(self, conversation_id: int, document: Document) -> None:
         """

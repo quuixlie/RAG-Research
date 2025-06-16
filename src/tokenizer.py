@@ -35,81 +35,48 @@ class FixedSizeTokenizer(Tokenizer):
         return [text[i*self.chunk_size:min((i+1)*self.chunk_size,len(text))] for i in range(ceil(len(text)/self.chunk_size))]
 
 
-class TextSplitterKwargs(BaseModel):
-    chunk_size:int = 100
-    chunk_overlap:int = 0
 
-TextSplitterName = Literal["character-tiktoken","character-recursive","markdown"]
+class RecursiveTokenizer(Tokenizer):
+    def __init__(self,chunk_size:int,chunk_overlap:int):
 
-def text_splitter_factory(splitter_name: TextSplitterName ,args:TextSplitterKwargs = TextSplitterKwargs()) -> langchain_text_splitters.TextSplitter:
+        if chunk_size <= 0:
+            raise Exception(f"chunk_size has to be greater than 0 (current is:{chunk_size})")
 
-    match splitter_name:
-        case "character-tiktoken":
-            # This could be something else depending on the model, but cl100k_base is used for targeting gpt-4,gpt3-5
-            encoding_name = "cl100k_base"
-            return langchain_text_splitters.CharacterTextSplitter.from_tiktoken_encoder(encoding_name=encoding_name,chunk_size=args.chunk_size,chunk_overlap=args.chunk_overlap)
-        case "character-recursive":
-            return langchain_text_splitters.RecursiveCharacterTextSplitter(chunk_size=args.chunk_size,chunk_overlap=args.chunk_overlap)
-        case "markdown":
-            return langchain_text_splitters.MarkdownTextSplitter(chunk_size=args.chunk_size,chunk_overlap=args.chunk_overlap)
+        if chunk_overlap <= 0:
+            raise Exception(f"chunk_overlap has to be greater than 0 (current is:{chunk_overlap})")
 
+        self.chunk_size = chunk_size
+        self.chunk_overlap = chunk_overlap
+        self.splitter = langchain_text_splitters.RecursiveCharacterTextSplitter(chunk_size=chunk_size,chunk_overlap=chunk_overlap)
+
+    @override
+    def tokenize(self,text:str) -> list[str]:
+        """
+        Tries to split the chunks to be below or equal `self.chunk_size`
+        by a parametrized list of characters ['\n\n','\n',' ',''] (paragraph,line,word,...)
+
+        The fragments will overlap `self.chunk_overlap` at most
+        """
+        return self.splitter.split_text(text)
 
 if __name__ == "__main__":
 
-    fixed = FixedSizeTokenizer(10)
-    print(fixed.tokenize("hello this is some very long string that i want to tokenize "))
+    sample_text = """
+    This is the first paragraph and it is about some crazy doo it is super looooooooooooooooong.
+    And it continueshere blablablabl
 
-    exit(0)
-
-
-    markdown_test = """
-    # Title
-    
-    This is a paragraph.
-    
-    ## Section
-    
-    More content here.
-    
-    Another paragraph.
+    This is other paragraph and it is shorter
     """
 
-    def test_splitter(splitter,text):
-        print("#####################################################")
-        print("testing {:<20} splitter".format(repr(type(splitter))))
-        print("#####################################################")
-        chunks = splitter.split_text(text)
+    chunk_size=40
+    chunk_overlap=15
 
-        for i,chunk in enumerate(chunks):
-            print("chunk",i,"\n",chunk);
+    fixed = FixedSizeTokenizer(chunk_size)
+    print("========= FIXED ========")
+    print(fixed.tokenize(sample_text))
 
-
-
-    markdown_splitter = text_splitter_factory("markdown")
-    recursive_splitter = text_splitter_factory("character-recursive")
-    tiktoken_splitter = text_splitter_factory("character-tiktoken")
-    markdown_header_splitter = langchain_text_splitters.MarkdownHeaderTextSplitter(headers_to_split_on=[
-        ("#","Title"),
-        ("##","Section"),
-        ("###","Detail"),
-        ])
-
-    test_splitter(markdown_splitter,markdown_test)
-    test_splitter(markdown_header_splitter,markdown_test)
-    test_splitter(recursive_splitter,markdown_test)
-    test_splitter(tiktoken_splitter,markdown_test)
-
-
-
-
-
-
-     
-
-
-
-
-
-
+    print("========= RECURSIVE ========")
+    rec = RecursiveTokenizer(chunk_size,chunk_overlap)
+    print(rec.tokenize(sample_text))
 
 
